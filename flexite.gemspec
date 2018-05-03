@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Flexite::VERSION
   s.authors     = ["Maksim Rusakovich"]
   s.email       = ["rusakovich.maksim@gmail.com"]
-  s.homepage    = "homepage"
+  s.homepage    = "https://github.com/mrusakovich/flexite"
   s.summary     = "summary"
   s.description = "description"
 
@@ -17,7 +17,5 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.22"
-  # s.add_dependency "jquery-rails"
-
-  s.add_development_dependency "sqlite3"
+  s.add_dependency "acts_as_tree", "~> 2.7.1"
 end

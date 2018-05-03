@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Value:</b>
+  <%= @entry.value %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @entry.type %>
+</p>
+
+<p>
+  <b>Entry:</b>
+  <%= @entry.entry %>
+</p>
+
+<p>
+  <b>Config:</b>
+  <%= @entry.config %>
+</p>
+
+
+<%= link_to 'Edit', edit_entry_path(@entry) %> |
+<%= link_to 'Back', entries_path %>
