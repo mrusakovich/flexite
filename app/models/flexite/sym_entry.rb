@@ -4,6 +4,6 @@ class Flexite::SymEntry < Flexite::Entry
   end
 
   def self.cast(value)
-    value.to_sym
+    value.to_s.to_sym
   end
 end

@@ -1,6 +1,5 @@
 class Flexite::Entry < ActiveRecord::Base
   belongs_to :entry, polymorphic: true
-
   attr_accessible :type, :value
 
   def cast_v1

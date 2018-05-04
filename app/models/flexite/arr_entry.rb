@@ -6,6 +6,6 @@ class Flexite::ArrEntry < Flexite::Entry
   end
 
   def self.cast(value)
-    Array(value)
+    Array.wrap(value)
   end
 end
