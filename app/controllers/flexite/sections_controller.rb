@@ -2,62 +2,33 @@ require_dependency "flexite/application_controller"
 
 module Flexite
   class SectionsController < ApplicationController
-    # GET /sections
-    # GET /sections.json
     def index
       @sections = Section.all
-
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @sections }
-      end
     end
 
-    # GET /sections/1
-    # GET /sections/1.json
     def show
       @section = Section.find(params[:id])
-
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @section }
-      end
     end
 
-    # GET /sections/new
-    # GET /sections/new.json
     def new
-      @section = Section.new
-
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @section }
-      end
+      @section_form = Sections::NewForm.new
     end
 
-    # GET /sections/1/edit
     def edit
-      @section = Section.find(params[:id])
+      @section_form = Sections::NewForm.new(Section.find(params[:id]).attributes)
     end
 
-    # POST /sections
-    # POST /sections.json
     def create
-      @section = Section.new(params[:section])
+      @section_form = Sections::NewForm.new(params[:section])
+      result =  ServiceFactory.instance.get(:section_create, @section_form).call
 
-      respond_to do |format|
-        if @section.save
-          format.html { redirect_to @section, notice: 'Section was successfully created.' }
-          format.json { render json: @section, status: :created, location: @section }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @section.errors, status: :unprocessable_entity }
-        end
+      if result.succeed?
+        redirect_to result.record, notice: 'Section was successfully created.'
+      else
+        render action: :new
       end
     end
 
-    # PUT /sections/1
-    # PUT /sections/1.json
     def update
       @section = Section.find(params[:id])
 
@@ -72,8 +43,6 @@ module Flexite
       end
     end
 
-    # DELETE /sections/1
-    # DELETE /sections/1.json
     def destroy
       @section = Section.find(params[:id])
       @section.destroy

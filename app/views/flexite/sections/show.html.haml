@@ -1,0 +1,19 @@
+#notice
+  = notice
+
+#section_name
+  %b
+    Name:
+  = @section.name
+
+#section_children
+  - @section.walk_tree do |subsection, level|
+    %div
+      = link_to "#{'-'*level}#{subsection.name}", section_path(subsection)
+
+#section_configs
+  - @section.configs.each do |config|
+    = link_to config.name, config_path(config)
+
+= link_to 'Edit', edit_section_path(@section)
+= link_to 'Back', sections_path

@@ -11,6 +11,10 @@ class Flexite::HashEntry < Flexite::Entry
     Hash.try_convert(value)
   end
 
+  def view_type
+    :hash
+  end
+
   private
 
   def entries

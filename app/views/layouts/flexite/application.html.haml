@@ -1,0 +1,9 @@
+%html
+  %head
+  %title Flexite
+  = stylesheet_link_tag 'flexite/application', media: :all
+  = javascript_include_tag "flexite/#{controller_name}"
+  = csrf_meta_tags
+  %body
+    .container-fluid
+      = yield

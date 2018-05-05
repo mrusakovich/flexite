@@ -1,0 +1,3 @@
+= simple_form_for @entry_form, url: new_value_entries_path do |f|
+  = f.input :type, collection: Flexite::Entry::TYPES.keys, label_method: ->(l) { l.to_s.camelize }, include_blank: false
+  = f.button :submit, 'Add value'

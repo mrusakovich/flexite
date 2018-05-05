@@ -9,4 +9,8 @@ class Flexite::BoolEntry < Flexite::Entry
   def self.cast(value)
     value == '1' ? true : false
   end
+
+  def view_type
+    :boolean
+  end
 end

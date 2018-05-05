@@ -18,4 +18,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.22"
   s.add_dependency "acts_as_tree", "~> 2.7.1"
+  s.add_dependency "simple_form", "~> 2.1.3"
+
+  s.add_development_dependency "haml-rails", "~>  0.4.0"
+  s.add_development_dependency "sqlite3"
 end

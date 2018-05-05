@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Flexite::Engine => '/flexite'
+  mount Flexite::Engine => '/'
 end

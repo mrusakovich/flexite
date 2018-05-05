@@ -4,6 +4,7 @@ class CreateFlexiteEntries < ActiveRecord::Migration
       t.string :value
       t.string :type
       t.references :entry, polymorphic: true
+      t.references :config
 
       t.timestamps
     end

@@ -7,5 +7,11 @@ module Flexite
         app.paths['db/migrate'] << migration
       end
     end
+
+    config.generators do |g|
+      g.template_engine :haml
+    end
+
+    config.autoload_paths << "#{config.root}/app/models/concerns"
   end
 end

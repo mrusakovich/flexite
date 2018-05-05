@@ -1,0 +1,23 @@
+%h1
+  Listing sections
+
+%table.table.table-bordered
+  %tr
+    %th
+      Name
+    %th
+    %th
+    %th
+
+  - @sections.each do |section|
+    %tr
+      %td
+        = section.name
+      %td
+        = link_to 'Show', section, class: 'btn btn-success'
+      %td
+        = link_to 'Edit', edit_section_path(section), class: 'btn btn-warning'
+      %td
+        = button_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', form: { style: 'display: inline;' }
+%br
+= link_to 'New Section', new_section_path

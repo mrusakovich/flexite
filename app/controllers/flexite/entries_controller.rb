@@ -2,62 +2,44 @@ require_dependency "flexite/application_controller"
 
 module Flexite
   class EntriesController < ApplicationController
-    # GET /entries
-    # GET /entries.json
     def index
       @entries = Entry.all
   
       respond_to do |format|
-        format.html # index.html.erb
+        format.html
         format.json { render json: @entries }
       end
     end
-  
-    # GET /entries/1
-    # GET /entries/1.json
+
     def show
       @entry = Entry.find(params[:id])
   
       respond_to do |format|
-        format.html # show.html.erb
+        format.html
         format.json { render json: @entry }
       end
     end
-  
-    # GET /entries/new
-    # GET /entries/new.json
+
     def new
-      @entry = Entry.new
-  
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @entry }
-      end
+      @entry_form = Entries::TypeForm.new
     end
-  
-    # GET /entries/1/edit
+
     def edit
-      @entry = Entry.find(params[:id])
+      @entry_form = Entries::TypeForm.new(Entry.find(params[:id]).attributes)
     end
-  
-    # POST /entries
-    # POST /entries.json
+
     def create
-      @entry = Entry.new(params[:entry])
-  
-      respond_to do |format|
-        if @entry.save
-          format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
-          format.json { render json: @entry, status: :created, location: @entry }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @entry.errors, status: :unprocessable_entity }
-        end
-      end
+      @entry_form = Entries::NewForm.new(params[:entry])
+      result = ServiceFactory.instance.get(:entry_new, @entry_form).call
+      service_response(result)
     end
-  
-    # PUT /entries/1
-    # PUT /entries/1.json
+
+    def value
+      @entry_form = Entries::ValueForm.new(params[:entry])
+      result = ServiceFactory.instance.get(:entry_value, @entry_form).call
+      service_response(result)
+    end
+
     def update
       @entry = Entry.find(params[:id])
   
@@ -71,9 +53,7 @@ module Flexite
         end
       end
     end
-  
-    # DELETE /entries/1
-    # DELETE /entries/1.json
+
     def destroy
       @entry = Entry.find(params[:id])
       @entry.destroy

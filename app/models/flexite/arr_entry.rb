@@ -8,4 +8,8 @@ class Flexite::ArrEntry < Flexite::Entry
   def self.cast(value)
     Array.wrap(value)
   end
+
+  def view_type
+    :array
+  end
 end
