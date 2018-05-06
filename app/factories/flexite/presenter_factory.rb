@@ -2,7 +2,8 @@ module Flexite
   class PresenterFactory < BaseFactory
     def initialize
       @store = {
-        entry: 'Flexite::Entries::Presenter'
+        entry: 'Flexite::Entries::Presenter',
+        config: 'Flexite::Configs::Presenter'
       }
     end
   end

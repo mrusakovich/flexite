@@ -1,6 +1,15 @@
-%p#notice= notice
-
-
+- present @config do |presenter|
+  .config-name
+    Name:
+    = @config.name
+  .config-value
+    - if presenter.value?
+      Value:
+      = presenter.value
+  .config-children
+    - @config.walk_tree do |config, level|
+      - present config do |child_presenter|
+        .config-name
+          = child_presenter.name('-'*level)
 = link_to 'Edit', edit_config_path(@config)
-\|
-= link_to 'Back', configs_path
+= link_to 'Back', '#', onclick: 'history.back();return false;'

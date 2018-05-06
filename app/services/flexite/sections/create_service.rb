@@ -1,5 +1,5 @@
 module Flexite
-  class Sections::CreateService < BaseService
+  class Sections::CreateService < ActionService
     def call
       return fail if @form.invalid?
       success

@@ -1,16 +1,10 @@
 %h1 Listing configs
 
-%table
-  %tr
-    %th
-    %th
-    %th
-
-  - @configs.each do |config|
-    %tr
-      %td= link_to 'Show', config
-      %td= link_to 'Edit', edit_config_path(config)
-      %td= link_to 'Destroy', config, :method => :delete, :data => { :confirm => 'Are you sure?' }
+.configs-tree
+- Flexite::Config.walk_tree do |config, level|
+  - present config do |presenter|
+    .config-name
+      = presenter.name('-'*level)
 
 %br
 

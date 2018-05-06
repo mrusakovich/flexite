@@ -3,11 +3,13 @@ class CreateFlexiteConfigs < ActiveRecord::Migration
     create_table :flexite_configs do |t|
       t.string :name
       t.integer :created_by
+      t.references :parent, polymorphic: true
       t.references :section
 
       t.timestamps
     end
 
-    add_index :flexite_configs, :entry_id
+    add_index :flexite_configs, :parent_id
+    add_index :flexite_configs, :section_id
   end
 end

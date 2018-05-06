@@ -1,4 +1,4 @@
-class Flexite::BaseService::Result
+class Flexite::ActionService::Result
   def initialize(options = {})
     @options = options
     @errors = Hash.new { |h, k| h[k] = [] }

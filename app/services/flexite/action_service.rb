@@ -1,4 +1,4 @@
-class Flexite::BaseService
+class Flexite::ActionService
   def self.inherited(child)
     child.const_set(:Result, Result)
   end

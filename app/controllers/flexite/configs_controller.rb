@@ -27,7 +27,7 @@ module Flexite
     # GET /configs/new
     # GET /configs/new.json
     def new
-      @config = Config.new
+      @config_form = Configs::NewForm.new(section_id: params[:section_id])
   
       respond_to do |format|
         format.html # new.html.erb

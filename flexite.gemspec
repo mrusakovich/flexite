@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "haml-rails", "~>  0.4.0"
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "syck", "~> 1.3.0"
 end

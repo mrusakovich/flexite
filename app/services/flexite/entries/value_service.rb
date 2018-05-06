@@ -1,5 +1,5 @@
 module Flexite
-  class Entries::ValueService < BaseService
+  class Entries::ValueService < ActionService
     def call
       return fail if @form.invalid?
       success
