@@ -43,9 +43,8 @@ module Flexite
       hash.each do |name, value|
         entry = Config.new(name: name)
         save_entry(entry, value)
-        send("add_to_#{parent.class.name.demodulize.underscore}", parent, entry)
+        parent.configs << entry
       end
-
     rescue => exc
       @errors[parent] = [exc.message, hash]
     end
@@ -82,18 +81,6 @@ module Flexite
 
     def save_nil_class_value(parent, nil_val)
       parent.entry = Entry.new(value: nil_val)
-    end
-
-    def add_to_config(config, entry)
-      config.children << entry
-    end
-
-    def add_to_arr_entry(array, entry)
-      array.configs << entry
-    end
-
-    def add_to_section(section, entry)
-      section.configs << entry
     end
   end
 end

@@ -6,11 +6,11 @@ module Flexite
     end
 
     def success
-      Result.new(succeed: true, render: false, data: Section.create(@form.attributes))
+      Result.new(render: false, data: Section.create(@form.attributes))
     end
 
     def fail
-      Result.new(succeed:  false, render: true).tap do |res|
+      Result.new(succeed:  false).tap do |res|
         save_errors(res)
       end
     end

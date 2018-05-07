@@ -5,6 +5,8 @@
   - present config do |presenter|
     .config-name
       = presenter.name('-'*level)
+      - if presenter.value?
+        = presenter.value
 
 %br
 
