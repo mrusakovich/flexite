@@ -1,19 +1,4 @@
-%h1
-  Listing sections
-
-%table.table.table-bordered
-  %tr
-    %th
-      Name
-    %th
-    %th
-    %th
-
+%h1 Sections
+%ul.list-group
   - @sections.each do |section|
-    %tr
-      %td= section.name
-      %td= link_to 'Show', section, class: 'btn btn-success'
-      %td= link_to 'Add Config', new_section_config_path(section), class: 'btn btn-success'
-      %td= button_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', form: { style: 'display: inline;' }
-%br
-= link_to 'New Section', new_section_path, class: 'btn btn-default'
+    = render section

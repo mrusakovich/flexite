@@ -1,5 +1,5 @@
 module Flexite
-  class Entries::Presenter < BasePresenter
+  class EntryPresenter < BasePresenter
     def type
       @model.view_type
     end

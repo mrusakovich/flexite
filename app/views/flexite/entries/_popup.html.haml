@@ -1,0 +1,13 @@
+.modal.fade#edit-entry{ role: :dialog, aria: { hidden: 'true' } }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.modal-title Title
+        %button.close{ data: { dismiss: :modal }, aria: { label: 'Close' } }
+          %span{ aria: { hidden: 'true' } }
+            &times;
+      .modal-body#edit-entry-body
+        %p Some text
+      .modal-footer
+        %button.btn.btn-primary Save changes
+        %button.btn.btn-secondary{ data: { dismiss: :modal } } Close

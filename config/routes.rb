@@ -8,7 +8,9 @@ Flexite::Engine.routes.draw do
   resources :str_entries, controller: :entries
   resources :sym_entries, controller: :entries
   resources :arr_entries, controller: :entries
-  resources :configs
+  resources :configs do
+    get '/:parent_id/entries', on: :collection, to: 'configs#entries', as: :entries
+  end
 
   resources :sections do
     resources :configs do
