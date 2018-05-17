@@ -16,12 +16,6 @@ module Flexite
       end
     end
 
-    def self.test_migration
-      secs = {app: ["#{Rails.root}/config/application.yml"]}
-      m = Data::Migrators::Yaml.new(secs)
-      new(m).call
-    end
-
     private
 
     def save_section(section, configs)
