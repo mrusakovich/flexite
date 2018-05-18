@@ -1,5 +1,5 @@
 module Flexite
-  class Configs::NewForm < BaseForm
+  class Config::Form < BaseForm
     attr_accessor :name, :section_id
 
     def self.model_name

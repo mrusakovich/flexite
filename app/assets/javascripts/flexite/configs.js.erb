@@ -1,7 +1,8 @@
 config = new function () {
     var self = this,
         paths = {
-            children: decodeURIComponent("<%= entries_configs_path('?') %>")
+            children: decodeURIComponent("<%= entries_configs_path('?') %>"),
+            edit_entry: decodeURIComponent("<%= edit_entry_path('?') %>")
         };
 
     this.appendChildren = function (id, node) {
@@ -20,9 +21,9 @@ config = new function () {
         $flexite(node).attr("onclick", `config.appendChildren(${id}, this);`);
     };
 
-    this.editEntry = function(id, node) {
+    this.editEntry = function(id) {
         event.stopPropagation();
-
+        $flexite.get(getRoute("edit_entry", [id]))
     }
 
     function getRoute(name, params) {

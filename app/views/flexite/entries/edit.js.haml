@@ -1,0 +1,3 @@
+$flexite('#edit-entry #edit-entry-title').text("#{@entry.parent.name}");
+$flexite('#edit-entry-body').html("#{j render "values/#{@entry.view_type}", form: @entry_form}");
+$flexite('#edit-entry').modal('show');

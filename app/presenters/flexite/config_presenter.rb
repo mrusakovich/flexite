@@ -11,7 +11,11 @@ module Flexite
     private
 
     def edit_entry
-      link_to @model.name, edit_entry_path(@model.entry), remote: true
+      content_tag(:li, class: 'list-group-item') do
+        content_tag(:button, class: 'btn btn-link', onclick: "config.editEntry(#{@model.entry.id})") do
+          @model.name
+        end
+      end
     end
 
     def children

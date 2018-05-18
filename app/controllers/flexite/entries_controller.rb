@@ -25,13 +25,16 @@ module Flexite
     end
 
     def edit
-      @entry_form = Entries::TypeForm.new(Entry.find(params[:id]).attributes)
+      @entry = Entry.find(params[:id])
+      @entry_form = Entry::Form.new(@entry.attributes)
+      render layout: false
     end
 
     def create
-      @entry_form = Entries::NewForm.new(params[:entry])
-      result = ServiceFactory.instance.get(:entry_new, @entry_form).call
-      service_response(result)
+      binding.pry
+      # @entry_form = Entries::NewForm.new(params[:entry])
+      # result = ServiceFactory.instance.get(:entry_new, @entry_form).call
+      # service_response(result)
     end
 
     def value
@@ -41,17 +44,7 @@ module Flexite
     end
 
     def update
-      @entry = Entry.find(params[:id])
-  
-      respond_to do |format|
-        if @entry.update_attributes(params[:entry])
-          format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @entry.errors, status: :unprocessable_entity }
-        end
-      end
+      binding.pry
     end
 
     def destroy

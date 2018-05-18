@@ -1,4 +1,6 @@
 %h1 Sections
-%ul.list-group
-  - @sections.each do |section|
-    = render section
+.row
+  .col-md-4
+    %ul.list-group
+      - @sections.each do |section|
+        = render section

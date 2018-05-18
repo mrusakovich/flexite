@@ -1,5 +1,5 @@
 module Flexite
-  class Sections::NewForm < BaseForm
+  class Section::Form < BaseForm
     attr_accessor :name, :id
     validates :name, presence: true
 

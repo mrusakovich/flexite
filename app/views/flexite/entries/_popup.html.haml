@@ -2,12 +2,11 @@
   .modal-dialog
     .modal-content
       .modal-header
-        %h5.modal-title Title
-        %button.close{ data: { dismiss: :modal }, aria: { label: 'Close' } }
+        %h5.modal-title#edit-entry-title
+        %button.close{ data: { dismiss: :modal }, aria: { label: 'Close' }, style: 'outline: none;' }
           %span{ aria: { hidden: 'true' } }
             &times;
       .modal-body#edit-entry-body
-        %p Some text
       .modal-footer
-        %button.btn.btn-primary Save changes
+        %button.btn.btn-primary Save
         %button.btn.btn-secondary{ data: { dismiss: :modal } } Close

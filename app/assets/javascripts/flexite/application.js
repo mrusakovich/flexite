@@ -9,8 +9,8 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//<% environment.context_class.instance_eval { include Flexite::Engine.routes.url_helpers } %>
 //= require jquery
 //= require jquery_ujs
+//= require ./common
+//= require ./configs
 //= require_tree .
-$flexite = jQuery.noConflict();
