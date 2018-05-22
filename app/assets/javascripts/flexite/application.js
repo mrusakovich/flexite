@@ -9,8 +9,9 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//= require jquery
+//= require jquery.min
 //= require jquery_ujs
 //= require ./common
-//= require ./configs
-//= require_tree .
+//= require ./bootstrap.min
+//= require ./treeview
+//

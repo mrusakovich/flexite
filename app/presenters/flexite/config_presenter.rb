@@ -1,26 +1,36 @@
 module Flexite
   class ConfigPresenter < BasePresenter
-    def name
-      @model.entry.present? ? edit_entry : children
-    end
-
-    def value
-      @model.view_value
+    def nodes(array)
+      array << Rails.cache.fetch(@model) do
+        { text: @model.name, href: treeview_href, selectable: treeview_selectable, nodes: treeview_nodes([]) }
+      end
     end
 
     private
 
-    def edit_entry
-      content_tag(:li, class: 'list-group-item') do
-        content_tag(:button, class: 'btn btn-link', onclick: "config.editEntry(#{@model.entry.id})") do
-          @model.name
-        end
+    def treeview_href
+      if @model.configs.any?
+        entries_configs_path(@model)
+      elsif @model.entry.present?
+        edit_entry_path(@model.entry)
       end
     end
 
-    def children
-      content_tag(:li, class: 'list-group-item', onclick: "config.appendChildren(#{@model.id}, this);") do
-        @model.name
+    def treeview_selectable
+      if @model.entry.present?
+        true
+      else
+        false
+      end
+    end
+
+    def treeview_nodes(nodes)
+      return nil if @model.configs.blank?
+
+      @model.configs.each_with_object(nodes) do |config, memo|
+        present config do |presenter|
+          presenter.nodes(memo)
+        end
       end
     end
   end

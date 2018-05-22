@@ -1,0 +1,22 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+$flexite(window).on('load', function () {
+    var $tree = $flexite("#tree");
+
+    $flexite.get("<%= sections_path(format: :json) %>", function (data) {
+        $tree.treeview({
+            data: data,
+            onNodeExpanded: function(event, node) {
+                $flexite.get(node.href, function(nodes) {
+                    $tree.treeview(true).addNodes(nodes, node.nodeId);
+                });
+            },
+            onNodeCollapsed: function(event, node) {
+                $tree.treeview(true).removeNodes(node.nodeId);
+            },
+            onNodeSelected: function(event, node) {
+                $flexite.get(node.href);
+            }
+        })
+    })
+});
