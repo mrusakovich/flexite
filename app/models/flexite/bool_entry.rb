@@ -1,15 +1,13 @@
-class Flexite::BoolEntry < Flexite::Entry
-  TRUE = 'true'.freeze
+module Flexite
+  class BoolEntry < Entry
+    TRUE = 'true'.freeze
 
-  def value
-    self.class.cast(self[:value])
-  end
+    def view_type
+      :boolean
+    end
 
-  def self.cast(value)
-    value == TRUE ? true : false
-  end
-
-  def view_type
-    :boolean
+    def form
+      Entry::Form.new(attributes.merge(value: value == TRUE ? 1 : 0))
+    end
   end
 end

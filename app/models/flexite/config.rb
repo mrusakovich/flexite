@@ -20,11 +20,12 @@ module Flexite
     end
 
     def self.tree_view(parent_id)
-      joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id")
-      .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id")
-      .select(["#{table_name}.id", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count, #{Entry.table_name}.id AS entry_id"])
-      .where(parent_id: parent_id)
-      .group("#{table_name}.id")
+      relation = joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id")
+        .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id")
+        .select(["#{table_name}.id", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count, #{Entry.table_name}.id AS entry_id"])
+        .where(parent_id: parent_id)
+
+      ["flexite/configs/query-#{parent_id}-#{Digest::MD5.hexdigest(relation.to_sql)}-#{relation.maximum(:updated_at)}", relation.group("#{table_name}.id")]
     end
 
     private

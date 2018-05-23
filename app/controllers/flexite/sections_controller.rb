@@ -5,9 +5,17 @@ module Flexite
     def index
       respond_to do |format|
         format.html
-        format.json do
-          render json: Section.tree_view(params[:parent_id]).map(&:to_tree_node)
-        end
+        index_json(format)
+      end
+    end
+
+    private
+
+    def index_json(format)
+      format.json do
+        cache_key, @sections = Section.tree_view(params[:parent_id])
+
+        render json: Rails.cache.fetch(cache_key) { @sections.map(&:to_tree_node) }
       end
     end
   end

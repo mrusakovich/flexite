@@ -2,10 +2,10 @@
   .modal-dialog
     .modal-content
       .modal-header
-        %h5.modal-title#edit-entry-title
-        %button.close{ data: { dismiss: :modal }, aria: { label: 'Close' }, style: 'outline: none;' }
+        %button.close{ type: :button, data: { dismiss: :modal }, aria: { label: 'Close' } }
           %span{ aria: { hidden: 'true' } }
             &times;
+        %h4.modal-title#edit-entry-title
       .modal-body#edit-entry-body
       .modal-footer
         %button.btn.btn-primary Save
