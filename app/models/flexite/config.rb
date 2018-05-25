@@ -19,13 +19,13 @@ module Flexite
       }
     end
 
-    def self.tree_view(parent_id)
-      relation = joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id")
-        .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id")
+    def self.tree_view(parent_id, parent_type)
+      relation = joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id AND configs_#{table_name}.parent_type = '#{model_name}'")
+        .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id AND #{Entry.table_name}.parent_type = '#{model_name}'")
         .select(["#{table_name}.id", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count, #{Entry.table_name}.id AS entry_id"])
-        .where(parent_id: parent_id)
+        .where(parent_id: parent_id, parent_type: parent_type.camelize)
 
-      ["flexite/configs/query-#{parent_id}-#{Digest::MD5.hexdigest(relation.to_sql)}-#{relation.maximum(:updated_at)}", relation.group("#{table_name}.id")]
+      ["flexite/configs/query-#{parent_id}-#{Digest::MD5.hexdigest(relation.to_sql)}-#{relation.maximum(:updated_at).to_i}", relation.group("#{table_name}.id")]
     end
 
     private
@@ -34,7 +34,7 @@ module Flexite
       if entry_id.present?
         Engine.routes.url_helpers.edit_entry_path(entry_id, format: :js)
       else
-        Engine.routes.url_helpers.section_configs_path(self, format: :json)
+        Engine.routes.url_helpers.parent_configs_path(self.class.name.underscore, self, format: :json)
       end
     end
   end

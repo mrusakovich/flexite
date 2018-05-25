@@ -7,10 +7,6 @@ module Flexite
       entries.select([:id, :value, :type]).map(&:value)
     end
 
-    def self.cast(value)
-      Array.wrap(value)
-    end
-
     def view_type
       :array
     end

@@ -18,7 +18,7 @@ class Flexite::ActionService
     raise NotImplementedError
   end
 
-  def fail
+  def failure
     raise NotImplementedError
   end
 

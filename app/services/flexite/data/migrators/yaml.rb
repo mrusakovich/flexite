@@ -6,12 +6,18 @@ module Flexite
       end
 
       def call
-        @sections.each_with_object({}) do |(section, paths), data|
+        @sections.each_with_object(data) do |(section, paths), data|
           paths.each do |p|
             configs = YAML.load_file(p)
-            data.key?(section) ? data[section].merge(configs) : data[section] = configs
+            data[section].merge!(configs)
           end
         end
+      end
+
+      private
+
+      def data
+        Hash.new { |h, k| h[k] = {} }
       end
     end
   end

@@ -61,12 +61,12 @@ module Flexite
       parent.entry = StrEntry.new(value: string)
     end
 
-    def save_true_class_value(parent, boolean)
-      parent.entry = BoolEntry.new(value: boolean.to_s)
+    def save_true_class_value(parent, _)
+      parent.entry = BoolEntry.new(value: 1)
     end
 
-    def save_false_class_value(parent, boolean)
-      save_true_class_value(parent, boolean)
+    def save_false_class_value(parent, _)
+      parent.entry = BoolEntry.new(value: 0)
     end
 
     def save_fixnum_value(parent, fixnum)

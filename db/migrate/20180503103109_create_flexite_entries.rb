@@ -9,5 +9,6 @@ class CreateFlexiteEntries < ActiveRecord::Migration
     end
 
     add_index :flexite_entries, :parent_id
+    add_index :flexite_entries, :parent_type
   end
 end
