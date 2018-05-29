@@ -21,10 +21,6 @@ defaults: &default
   rfc_lang: EN
   rfc_trace: 0
 
-  test:
-    -
-      a: 123
-
   new_features:
     # :order_change: true
 

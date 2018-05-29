@@ -1,6 +1,6 @@
 module Flexite
   class Entry::ArrayForm < BaseForm
-    attr_accessor :id, :type, :values
+    attr_accessor :id, :type, :entries
 
     def self.model_name
       Entry.model_name

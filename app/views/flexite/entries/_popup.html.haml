@@ -8,5 +8,5 @@
         %h4.modal-title#edit-entry-title
       .modal-body#edit-entry-body
       .modal-footer
-        %button.btn.btn-primary Save
+        %button.btn.btn-primary{ onclick: "$flexite('form[id^=edit_entry]').submit();" } Save
         %button.btn.btn-secondary{ data: { dismiss: :modal } } Close
