@@ -10,3 +10,9 @@
       .modal-footer
         %button.btn.btn-primary{ onclick: "$flexite('form[id^=edit_entry]').submit();" } Save
         %button.btn.btn-secondary{ data: { dismiss: :modal } } Close
+
+:javascript
+  $flexite("#edit-entry").on("hidden.bs.modal", function () {
+    $flexite("#edit-entry #edit-entry-title").text("");
+    $flexite("#edit-entry-body").html("");
+  });

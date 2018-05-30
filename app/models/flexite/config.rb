@@ -19,13 +19,11 @@ module Flexite
       }
     end
 
-    def self.tree_view(parent_id, parent_type)
-      relation = joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id AND configs_#{table_name}.parent_type = '#{model_name}'")
-        .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id AND #{Entry.table_name}.parent_type = '#{model_name}'")
-        .select(["#{table_name}.id", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count, #{Entry.table_name}.id AS entry_id"])
-        .where(parent_id: parent_id, parent_type: parent_type.camelize)
-
-      ["flexite/configs/query-#{parent_id}-#{Digest::MD5.hexdigest(relation.to_sql)}-#{relation.maximum(:updated_at).to_i}", relation.group("#{table_name}.id")]
+    def self.tree_view(parent)
+      joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id AND configs_#{table_name}.parent_type = '#{model_name}'")
+      .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id AND #{Entry.table_name}.parent_type = '#{model_name}'")
+      .select(["#{table_name}.id", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count, #{Entry.table_name}.id AS entry_id"])
+      .where(parent_id: parent.id, parent_type: parent.class.name).group("#{table_name}.id")
     end
 
     private

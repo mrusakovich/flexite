@@ -3,7 +3,7 @@ module Flexite
     has_many :entries, as: :parent, dependent: :destroy
 
     def value
-      entries.select([:id, :value, :type]).map(&:value)
+      magic_entries.map(&:value)
     end
 
     def view_type
@@ -14,8 +14,18 @@ module Flexite
       entries << entry
     end
 
-    def form
-      Entry::ArrayForm.new(attributes.merge(entries: entries.select([:id, :value, :type])))
+    def form(attributes = {})
+      Entry::ArrayForm.new(attributes.present? ? attributes : self.attributes.merge(entries: magic_entries))
+    end
+
+    def service(type)
+      "arr_entry_#{type}".to_sym
+    end
+
+    private
+
+    def magic_entries
+      entries.select([:id, :value, :type, :updated_at])
     end
   end
 end

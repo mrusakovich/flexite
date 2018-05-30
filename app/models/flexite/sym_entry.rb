@@ -10,4 +10,12 @@ class Flexite::SymEntry < Flexite::Entry
   def view_value
     ":#{value}"
   end
+
+  private
+
+  def check_value
+    value.to_sym
+  rescue
+    errors(:value, 'cannot be casted to Symbol')
+  end
 end

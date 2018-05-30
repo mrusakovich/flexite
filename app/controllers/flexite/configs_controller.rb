@@ -3,19 +3,13 @@ require_dependency "flexite/application_controller"
 module Flexite
   class ConfigsController < ApplicationController
     def index
-      respond_to do |format|
-        format.html
-        index_json(format)
+      if params[:parent_id].blank? || params[:parent_type].blank?
+        render nothing: true, status: :bad_request and return
       end
-    end
 
-    private
-
-    def index_json(format)
-      format.json do
-        cache_key, @configs = Config.tree_view(params[:parent_id], params[:parent_type])
-        render json: Rails.cache.fetch(cache_key) { @configs.map(&:to_tree_node) }
-      end
+      parent = params[:parent_type].camelize.constantize.find(params[:parent_id])
+      @parent_cache_key = "#{controller_name}/parent/#{parent.cache_key}/#{action_name}/#{request.format.symbol}"
+      @configs = Config.tree_view(parent)
     end
   end
 end

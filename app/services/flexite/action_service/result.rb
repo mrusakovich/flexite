@@ -24,7 +24,12 @@ class Flexite::ActionService::Result
     @options[:data]
   end
 
+  def message
+    @options[:message]
+  end
+
   alias :record :data
+  alias :flash :message
 
   def add_error(name, value)
     @errors[name] << value
@@ -35,6 +40,6 @@ class Flexite::ActionService::Result
   end
 
   def endpoint
-    @options[:endpoint]
+    @options.fetch(:endpoint, {})
   end
 end

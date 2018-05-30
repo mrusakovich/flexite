@@ -18,5 +18,6 @@ module Flexite
     end
 
     config.autoload_paths << "#{config.root}/app/models/concerns"
+    config.action_controller.include_all_helpers = false
   end
 end

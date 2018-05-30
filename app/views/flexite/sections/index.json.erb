@@ -1,0 +1,10 @@
+[
+  <% cache @parent_cache_key do %>
+    <% @sections.each_with_index do |section, index| %>
+      <% cache "#{@parent_cache_key}/#{section.cache_key}" do %>
+        <%= section.to_tree_node.to_json.html_safe %>
+        <%= ',' if index != @sections.size - 1 %>
+      <% end %>
+    <% end %>
+  <% end %>
+]
