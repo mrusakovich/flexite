@@ -8,7 +8,7 @@ module Flexite
       end
 
       parent = params[:parent_type].camelize.constantize.find(params[:parent_id])
-      @parent_cache_key = "#{controller_name}/parent/#{parent.cache_key}/#{action_name}/#{request.format.symbol}"
+      @parent_cache_key = "#{parent.cache_key}/#{controller_name}/#{action_name}.#{request.format.symbol}"
       @configs = Config.tree_view(parent)
     end
   end

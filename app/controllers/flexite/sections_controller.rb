@@ -13,7 +13,7 @@ module Flexite
 
     def index_json(format)
       format.json do
-        @parent_cache_key = "#{controller_name}/parent/#{params.fetch(:parent_id, :no_parent)}/#{action_name}/#{request.format.symbol}"
+        @parent_cache_key = "flexite/sections/#{params.fetch(:parent_id, :no_parent)}/#{controller_name}/#{action_name}.#{request.format.symbol}"
         @sections = Section.tree_view(params[:parent_id])
       end
     end

@@ -22,7 +22,11 @@ module Flexite
 
     def save_entries(entries)
       entries.each do |_, entry|
-        send("save_#{entry[:type].demodulize.underscore}", entry) rescue save_entry(entry)
+        if respond_to?("save_#{entry[:type].demodulize.underscore}")
+          send("save_#{entry[:type].demodulize.underscore}", entry)
+        else
+          save_entry(entry)
+        end
       end
     end
 

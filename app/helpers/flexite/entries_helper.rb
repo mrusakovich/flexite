@@ -2,9 +2,9 @@ module Flexite
   module EntriesHelper
     def render_entries(entries, form, entry_nesting = [[:entry], [:entries], [0]], increment_index = 2)
       entries.map do |entry|
-        begin
+        if respond_to?("render_#{entry.class.name.demodulize.underscore}")
           send("render_#{entry.class.name.demodulize.underscore}", entry, form, entry_nesting, increment_index)
-        rescue
+        else
           render_simple(entry, form, entry_nesting)
         end.tap { entry_nesting[increment_index][0] += 1 }
       end.join.html_safe
