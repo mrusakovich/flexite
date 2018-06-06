@@ -1,15 +1,36 @@
-require_dependency "flexite/application_controller"
+require_dependency 'flexite/application_controller'
 
 module Flexite
   class ConfigsController < ApplicationController
-    def index
-      if params[:parent_id].blank? || params[:parent_type].blank?
-        render nothing: true, status: :bad_request and return
+    helper ConfigsHelper
+    helper EntriesHelper
+
+    def new
+      @config_form = Config::Form.new
+    end
+
+    def create
+      result = ServiceFactory.instance.get(:config_create, Config::Form.new(config_params)).call
+
+      if result.succeed?
+        @node = result.data[:record].to_tree_node
+        @parent_id = config_params[:parent_id]
+        @parent_type = config_params[:parent_type]
       end
 
-      parent = params[:parent_type].camelize.constantize.find(params[:parent_id])
-      @parent_cache_key = "#{parent.cache_key}/#{controller_name}/#{action_name}.#{request.format.symbol}"
-      @configs = Config.tree_view(parent)
+      service_flash(result)
+      service_response(result)
+    end
+
+    def destroy
+      Config.destroy(params[:id])
+      head :ok
+    end
+
+    private
+
+    def config_params
+      params[:config]
     end
   end
 end

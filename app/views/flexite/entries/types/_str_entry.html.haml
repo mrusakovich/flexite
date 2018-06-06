@@ -1,0 +1,4 @@
+= f.input :value, label: false do
+  = f.input :value, as: :string, input_html: { class: 'form-control', placeholder: 'String' }, label: false
+  - if local_assigns[:delete_link].present?
+    = delete_link

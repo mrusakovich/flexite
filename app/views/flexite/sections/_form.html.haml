@@ -1,0 +1,3 @@
+= simple_form_for @section_form, remote: true do |f|
+  = f.input :name, as: :string, input_html: { class: 'form-control', placeholder: 'Name' }, label: false
+  = f.button :submit, class: 'btn btn-success'

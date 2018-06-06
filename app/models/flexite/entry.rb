@@ -6,24 +6,21 @@ module Flexite
     belongs_to :parent, polymorphic: true, touch: true
     attr_accessible :value
     delegate :table_name, to: 'self.class'
-
     before_save :check_value, :cast_value
 
     def view_value
       value.to_s
     end
 
-    def view_type
-      :blank
+    def self.form(attributes = {})
+      Form.new(attributes)
     end
 
-    def form(attributes = {})
-      Form.new(attributes.present? ? attributes : self.attributes)
-    end
-
-    def service(type)
+    def self.service(type)
       "entry_#{type}".to_sym
     end
+
+    alias :form_attributes :attributes
 
     private
 

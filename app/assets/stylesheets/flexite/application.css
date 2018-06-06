@@ -11,3 +11,18 @@
  *= require ./bootstrap.min
  *= require ./bootstrap-treeview.min
  */
+
+#flash .alert {
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#main-container {
+    padding-top: 65px;
+}
+
+button.close {
+    outline: none;
+}

@@ -1,52 +1,46 @@
 module Flexite
   module EntriesHelper
-    def render_entries(entries, form, entry_nesting = [[:entry], [:entries], [0]], increment_index = 2)
-      entries.map do |entry|
-        if respond_to?("render_#{entry.class.name.demodulize.underscore}")
-          send("render_#{entry.class.name.demodulize.underscore}", entry, form, entry_nesting, increment_index)
-        else
-          render_simple(entry, form, entry_nesting)
-        end.tap { entry_nesting[increment_index][0] += 1 }
-      end.join.html_safe
+    ENTRY_TYPE_OPTIONS = [
+      ['String', 'Flexite::StrEntry'],
+      ['Symbol', 'Flexite::SymEntry'],
+      ['Boolean', 'Flexite::BoolEntry'],
+      ['Array', 'Flexite::ArrEntry'],
+      ['Integer', 'Flexite::IntEntry']
+    ].freeze
+
+    def render_entries(entries, form)
+      content_tag :div, id: "array-entries-#{form.options[:index]}" do
+        entries.each_with_index do |entry, index|
+          concat render_entry(entry, form, index)
+        end
+      end
+    end
+
+    def entry_type_select(f = nil)
+      if f.present?
+        f.select :type, options_for_select(ENTRY_TYPE_OPTIONS), {}, class: 'form-control'
+      else
+        select_tag :new_entry_type, options_for_select(ENTRY_TYPE_OPTIONS), class: 'form-control'
+      end
     end
 
     private
 
-    def render_arr_entry(entry, form, entry_nesting, increment_index)
-      name = input_name(entry_nesting)
-      array_nesting = entry_nesting.dup
-      array_nesting.push([:entries], [0])
-
+    def render_entry(entry, form, index)
       cache "#{entry.cache_key}-#{__method__}" do
-        output_buffer << (content_tag(:div, class: 'form-group') do
-          concat (form.simple_fields_for(entry) do |fields|
-            concat fields.input :id, as: :hidden, input_html: { name: name % :id }
-            concat fields.input :type, as: :hidden, input_html: { name: name % :type }
+        entry_form = entry.class.form(entry.form_attributes)
+
+        concat(form.simple_fields_for(:entries, entry_form, index: index) do |fields|
+          delete_link = link_to 'Delete', destroy_array_entries_path(id: entry.id, type: entry.type, selector: "#{fields.object_name}-#{index}-#{entry.id}"),
+                                remote: true, method: :delete, class: 'btn btn-danger'
+
+          concat(content_tag(:div, id: "#{fields.object_name}-#{index}-#{entry.id}") do
+            concat fields.input :id, as: :hidden
+            concat fields.input :type, as: :hidden
+            concat render "types/#{entry_form.view_type}", f: fields, delete_link: delete_link
           end)
-
-          concat render_entries(entry.entries, form, array_nesting, increment_index + 2)
         end)
       end
-    end
-
-    def render_simple(entry, form, entry_nesting)
-      name = input_name(entry_nesting)
-
-      cache "#{entry.cache_key}-#{__method__}" do
-        output_buffer << (form.simple_fields_for(entry) do |fields|
-          concat fields.input :id, as: :hidden, input_html: { name: name % :id }
-          concat fields.input :type, as: :hidden, input_html: { name: name % :type }
-          concat fields.input :value, label: false, input_html: { class: 'form-control', name: name % :value }
-        end)
-      end
-    end
-
-    def input_name(entry_nesting)
-      name = entry_nesting.each_with_object('') do |e, memo|
-        memo << "[#{e.first.to_s}]"
-      end
-
-      "#{name}[%s]"
     end
   end
 end

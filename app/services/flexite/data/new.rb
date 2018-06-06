@@ -2,7 +2,7 @@ module Flexite
   class Data::New
     def initialize(migrator)
       @migrator = migrator
-      @errors = {}
+      @errors = Hash.new { |h, k| h[k] = [] }
       @result = {}
     end
 
@@ -21,26 +21,30 @@ module Flexite
     def save_section(section, configs)
       @result[section] = {}
 
-      Section.new(name: section).tap do |record|
-        save_hash_value(record, configs)
-        record.save
+      Section.create(name: section) do |record|
+        begin
+          save_hash_value(record, configs)
+        rescue => exc
+          @errors[record] << [exc.message, exc.backtrace]
+        end
       end
     end
 
     def save_entry(parent, entry)
       send("save_#{entry.class.name.underscore}_value", parent, entry)
+      raise "#{Random.rand}"
     rescue => exc
-      @errors[parent] = [exc.message, entry]
+      @errors[parent] << [exc.message, exc.backtrace]
     end
 
     def save_hash_value(parent, hash)
+      parent.selectable = false
+
       hash.each do |name, value|
         entry = Config.new(name: name)
         save_entry(entry, value)
         parent.configs << entry
       end
-    rescue => exc
-      @errors[parent] = [exc.message, hash]
     end
 
     def save_array_value(parent, array)

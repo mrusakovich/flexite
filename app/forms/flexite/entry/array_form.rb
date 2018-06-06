@@ -1,9 +1,11 @@
 module Flexite
-  class Entry::ArrayForm < BaseForm
-    attr_accessor :id, :type, :entries
+  class Entry
+    class ArrayForm < Form
+      attr_accessor :entries, :new_entries
 
-    def self.model_name
-      Entry.model_name
+      def entries
+        @entries ||= []
+      end
     end
   end
 end

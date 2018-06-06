@@ -3,6 +3,7 @@ class CreateFlexiteConfigs < ActiveRecord::Migration
     create_table :flexite_configs do |t|
       t.string :name
       t.integer :created_by
+      t.boolean :selectable, default: true
       t.references :parent, polymorphic: true
 
       t.timestamps

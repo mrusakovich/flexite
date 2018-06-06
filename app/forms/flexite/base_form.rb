@@ -17,4 +17,8 @@ class Flexite::BaseForm
   def persisted?
     respond_to?(:id) && id.present?
   end
+
+  def new_record?
+    !persisted?
+  end
 end

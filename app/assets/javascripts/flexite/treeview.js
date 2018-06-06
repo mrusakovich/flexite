@@ -102,7 +102,9 @@
 
             // Get methods
             addNodes: $.proxy(this.addNodes, this),
+            addToParent: $.proxy(this.addToParent, this),
             removeNodes: $.proxy(this.removeNodes, this),
+            removeNode: $.proxy(this.removeNode, this),
             getNode: $.proxy(this.getNode, this),
             getParent: $.proxy(this.getParent, this),
             getSiblings: $.proxy(this.getSiblings, this),
@@ -175,6 +177,7 @@
             parent.nodes.push(node);
         });
 
+        this.nodes = [];
         this.destroy();
         this.subscribeEvents();
         this.setInitialStates({ nodes: this.tree }, 0);
@@ -185,6 +188,29 @@
         var parent = this.getNode(parentId);
 
         parent.nodes = [];
+        this.nodes = [];
+        this.destroy();
+        this.subscribeEvents();
+        this.setInitialStates({ nodes: this.tree }, 0);
+        this.render();
+    };
+
+    Tree.prototype.removeNode = function(node) {
+        if (typeof node.parentId !== 'undefined') {
+            var parent = this.getNode(node.parentId);
+            var pIndex = parent.nodes.indexOf(node);
+            parent.nodes.splice(pIndex, 1);
+
+            if (!parent.nodes.length) {
+                parent.nodes = null;
+                parent.state.expanded = false;
+            }
+        } else {
+            var tIndex = this.tree.indexOf(node);
+            this.tree.splice(tIndex, 1);
+        }
+
+        this.nodes = [];
         this.destroy();
         this.subscribeEvents();
         this.setInitialStates({ nodes: this.tree }, 0);
@@ -730,6 +756,26 @@
      */
     Tree.prototype.getNode = function (nodeId) {
         return this.nodes[nodeId];
+    };
+
+    Tree.prototype.addToParent = function(node, parentId, parentType) {
+        var parent = this.nodes.find(function (node, index) {
+            return node.id == parentId && node.type === parentType
+        });
+
+        if (parent && parent.state.expanded) {
+            parent.nodes.push(node);
+        } else if(parent && !parent.state.expanded && !parent.nodes) {
+            parent.nodes = [];
+        } else if (!parentId) {
+            this.tree.push(node);
+        }
+
+        this.nodes = [];
+        this.destroy();
+        this.subscribeEvents();
+        this.setInitialStates({ nodes: this.tree }, 0);
+        this.render();
     };
 
     /**

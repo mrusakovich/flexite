@@ -1,10 +1,21 @@
 Flexite::Engine.routes.draw do
-  resources :entries
+  resources :entries do
+    collection do
+      get 'new_array' => 'entries#new_array_entry'
+      delete 'destroy_array' => 'entries#destroy_array_entry'
+      get ':parent_id/select_type' => 'entries#select_type', as: :select_type
+    end
+  end
+
   resources :sections
   resources :configs do
     resources :entries
   end
 
-  get ':parent_type/:parent_id/configs' => 'configs#index', as: :parent_configs, constraints: { parent_type: /.*/ }
+  resources :parents do
+    get :select, as: :select, on: :collection
+    get ':parent_type/configs' => 'parents#configs', constraints: { parent_type: /.*/ }, as: :configs
+  end
+
   root to: 'sections#index'
 end

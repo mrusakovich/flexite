@@ -7,6 +7,7 @@
   = javascript_include_tag "flexite/#{controller_name}"
   = csrf_meta_tags
   %body
-    = render 'flexite/entries/popup'
-    .container-fluid
+    #flash
+      = render 'flexite/shared/messages'
+    .container-fluid#main-container
       = yield

@@ -5,24 +5,20 @@ module Flexite
         return failure
       end
 
-      update_entry
-    end
-
-    private
-
-    def update_entry
       @form.type.constantize.update(@form.id, value: @form.value)
       success
     end
 
+    private
+
     protected
 
     def failure
-      Result.new(endpoint: { status: 400 })
+      Result.new(success: false, endpoint: { status: 400 })
     end
 
     def success
-      Result.new
+      Result.new(flash: { type: :success, message: 'Entry was updated!' })
     end
   end
 end

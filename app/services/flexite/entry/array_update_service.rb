@@ -5,14 +5,15 @@ module Flexite
         return failure
       end
 
-      update_entries
+      process_entries
     end
 
     private
 
-    def update_entries
+    def process_entries
       Entry.transaction do
-        save_entries(@form.entries)
+        update_entries(@form.entries)
+        create_entries(@form.new_entries, @form.id)
       end
 
       success
@@ -20,9 +21,9 @@ module Flexite
       exc_failure(exc)
     end
 
-    def save_entries(entries)
+    def update_entries(entries)
       entries.each do |_, entry|
-        if respond_to?("save_#{entry[:type].demodulize.underscore}")
+        if respond_to?("save_#{entry[:type].demodulize.underscore}", true)
           send("save_#{entry[:type].demodulize.underscore}", entry)
         else
           save_entry(entry)
@@ -30,9 +31,19 @@ module Flexite
       end
     end
 
+    def create_entries(new_entries, parent_id)
+      return if new_entries.blank?
+
+      new_entries.each do |_, entry|
+        klass = entry[:type].constantize
+        klass.create({parent_id: parent_id, parent_type: klass.base_class.sti_name, value: entry[:value]}, without_protection: true)
+      end
+    end
+
 
     def save_arr_entry(entry)
-      save_entries(entry[:entries])
+      update_entries(entry[:entries])
+      create_entries(entry[:new_entries], entry[:id])
     end
 
     def save_entry(entry)
@@ -42,15 +53,15 @@ module Flexite
     protected
 
     def failure
-      Result.new(endpoint: { status: 400 })
+      Result.new(success: false, endpoint: { status: 400 })
     end
 
     def exc_failure(exc)
-      Result.new(message: exc.message, endpoint: { status: 500 })
+      Result.new(success: false, message: exc.message, endpoint: { status: 500 })
     end
 
     def success
-      Result.new
+      Result.new(flash: { type: :success, message: 'Entry was updated!' })
     end
   end
 end
