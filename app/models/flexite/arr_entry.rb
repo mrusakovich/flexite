@@ -3,7 +3,7 @@ module Flexite
     has_many :entries, as: :parent, dependent: :destroy
 
     def value
-      magic_entries.map(&:value)
+      entries.select([:id, :value, :type]).map(&:value)
     end
 
     def entry=(entry)

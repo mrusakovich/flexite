@@ -7,6 +7,8 @@ module Flexite
     has_many :configs, dependent: :destroy
 
     scope :not_selectable, -> { select([:id, :name]).where(selectable: false) }
+    delegate :value, to: :entry, allow_nil: true
+    validates :name, uniqueness: { scope: :config_id }
 
     def to_tree_node
       {

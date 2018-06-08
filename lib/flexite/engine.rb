@@ -7,14 +7,14 @@ module Flexite
       app.config.assets.paths << File.join(root, 'app', 'assets', 'fonts')
     end
 
+    config.after_initialize do
+      Flexite.load
+    end
+
     initializer 'flexite.append_migrations' do |app|
       paths['db/migrate'].expanded.each do |migration|
         app.paths['db/migrate'] << migration
       end
-    end
-
-    config.generators do |g|
-      g.template_engine :haml
     end
 
     config.action_controller.include_all_helpers = false
