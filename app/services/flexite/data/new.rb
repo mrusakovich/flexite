@@ -7,8 +7,8 @@ module Flexite
     end
 
     def call
-      @migrator.call.each do |section, configs|
-        @result[section] = save_section(section, configs)
+      @migrator.call.each do |root, configs|
+        @result[root] = save_root(root, configs)
       end
 
       @result.tap do |result|
@@ -18,10 +18,10 @@ module Flexite
 
     private
 
-    def save_section(section, configs)
-      @result[section] = {}
+    def save_root(root, configs)
+      @result[root] = {}
 
-      Section.create(name: section) do |record|
+      Config.create(name: root) do |record|
         begin
           save_hash_value(record, configs)
         rescue => exc

@@ -3,7 +3,11 @@ require_dependency 'flexite/application_controller'
 module Flexite
   class ConfigsController < ApplicationController
     helper ConfigsHelper
-    helper EntriesHelper
+
+    def index
+      @configs = Config.tree_view(params[:config_id])
+      @cache_key = "#{controller_name}/#{action_name}.#{request.format.symbol}/parent_id/#{params.fetch(:config_id, :root)}"
+    end
 
     def new
       @config_form = Config::Form.new
@@ -14,8 +18,7 @@ module Flexite
 
       if result.succeed?
         @node = result.data[:record].to_tree_node
-        @parent_id = config_params[:parent_id]
-        @parent_type = config_params[:parent_type]
+        @parent_id = config_params[:config_id]
       end
 
       service_flash(result)

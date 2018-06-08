@@ -2,6 +2,8 @@ require_dependency 'flexite/application_controller'
 
 module Flexite
   class ApplicationController < ActionController::Base
+    append_view_path File.join(Flexite::Engine.root, "app/views/flexite/#{controller_name}")
+
     def self.inherited(subclass)
       subclass.append_view_path File.join(Flexite::Engine.root, "app/views/flexite/#{subclass.controller_name}")
     end

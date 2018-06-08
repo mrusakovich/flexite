@@ -2,9 +2,7 @@
   %head
   %title Flexite
   = stylesheet_link_tag 'flexite/application', media: :all
-  = stylesheet_link_tag "flexite/#{controller_name}", media: :all
   = javascript_include_tag 'flexite/application'
-  = javascript_include_tag "flexite/#{controller_name}"
   = csrf_meta_tags
   %body
     #flash

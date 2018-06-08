@@ -1,11 +1,7 @@
 module Flexite
   class Entry < ActiveRecord::Base
-    include Presentable
-
-    presenter :entry
     belongs_to :parent, polymorphic: true, touch: true
     attr_accessible :value
-    delegate :table_name, to: 'self.class'
     before_save :check_value, :cast_value
 
     def view_value

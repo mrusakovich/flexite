@@ -24,7 +24,7 @@ function Tree(selector) {
     var self = this, tree = $flexite(selector);
 
     this.init = function () {
-        $flexite.get("<%= sections_path(format: :json) %>", function (data) {
+        $flexite.get("<%= configs_path(format: :json) %>", function (data) {
             tree.treeview({
                 data: data,
                 onNodeExpanded: function (event, node) {
@@ -50,8 +50,8 @@ function Tree(selector) {
         self.init();
     }
 
-    this.addNode = function (jsonNode, parentId, parentType) {
-        tree.treeview(true).addToParent(JSON.parse(jsonNode), parentId, parentType);
+    this.addNode = function (jsonNode, parentId) {
+        tree.treeview(true).addToParent(JSON.parse(jsonNode), parentId);
     }
 
     this.setDataHref = function (dataHref) {

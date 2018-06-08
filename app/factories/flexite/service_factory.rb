@@ -10,7 +10,6 @@ module Flexite
         entry_destroy: 'Entry::DestroyService',
         arr_entry_destroy: 'Entry::DestroyService',
         destroy_array_entry: 'Entry::DestroyArrayEntryService',
-        section_create: 'Section::CreateService'
       }
     end
   end

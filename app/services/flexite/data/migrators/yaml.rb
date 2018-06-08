@@ -1,15 +1,15 @@
 module Flexite
   module Data
     class Migrators::Yaml
-      def initialize(sections)
-        @sections = sections
+      def initialize(roots)
+        @roots = roots
       end
 
       def call
-        @sections.each_with_object(data) do |(section, paths), data|
+        @roots.each_with_object(data) do |(root, paths), data|
           paths.each do |p|
             configs = YAML.load_file(p)
-            data[section].merge!(configs)
+            data[root].merge!(configs)
           end
         end
       end

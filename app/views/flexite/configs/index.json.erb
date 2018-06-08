@@ -1,7 +1,7 @@
 [
-  <% cache @parent_cache_key do %>
+  <% cache @cache_key do %>
     <% @configs.each_with_index do |config, index| %>
-      <% cache "#{@parent_cache_key}/#{config.cache_key}" do %>
+      <% cache config do %>
           <%= config.to_tree_node.to_json.html_safe %>
           <%= ',' if index != @configs.size - 1 %>
       <% end %>

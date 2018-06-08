@@ -4,12 +4,11 @@ class CreateFlexiteConfigs < ActiveRecord::Migration
       t.string :name
       t.integer :created_by
       t.boolean :selectable, default: true
-      t.references :parent, polymorphic: true
+      t.references :config
 
       t.timestamps
     end
 
-    add_index :flexite_configs, :parent_id
-    add_index :flexite_configs, :parent_type
+    add_index :flexite_configs, :config_id
   end
 end

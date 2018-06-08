@@ -10,6 +10,7 @@
  *
  *= require ./bootstrap.min
  *= require ./bootstrap-treeview.min
+ *= require ./tree
  */
 
 #flash .alert {

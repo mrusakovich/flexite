@@ -1,16 +1,6 @@
 = simple_form_for @config_form, remote: true do |f|
   = f.input :name, as: :string, input_html: { class: 'form-control', placeholder: 'Name' }, label: false
-  = f.input :parent_type,
-            collection: [['Root', 'Flexite::Section'], ['Node', 'Flexite::Config']],
-            prompt: 'Select parent type',
-            label: false,
-            input_html: { class: 'form-control' }
-  #config_parent_id
+  = f.input :config_id, collection: Flexite::Config.not_selectable, label_method: :name, value_method: :id,
+            input_html: { class: 'form-control', placeholder: 'Parent' }, label: false, prompt: 'Select parent'
+  = f.input :selectable, as: :boolean, label: false, wrapper_html: { class: 'checkbox' }
   = f.button :submit, class: 'btn btn-success'
-
-:javascript
-  $flexite("#config_parent_type").on("change", function () {
-    $flexite.get("#{select_parents_path}", {
-      parent_type: $flexite(this).val()
-    });
-  });

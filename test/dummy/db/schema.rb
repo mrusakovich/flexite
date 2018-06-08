@@ -16,15 +16,13 @@ ActiveRecord::Schema.define(:version => 20180503103109) do
   create_table "flexite_configs", :force => true do |t|
     t.string   "name"
     t.integer  "created_by"
-    t.boolean  "selectable",  :default => true
-    t.integer  "parent_id"
-    t.string   "parent_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "selectable", :default => true
+    t.integer  "config_id"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
-  add_index "flexite_configs", ["parent_id"], :name => "index_flexite_configs_on_parent_id"
-  add_index "flexite_configs", ["parent_type"], :name => "index_flexite_configs_on_parent_type"
+  add_index "flexite_configs", ["config_id"], :name => "index_flexite_configs_on_config_id"
 
   create_table "flexite_entries", :force => true do |t|
     t.string   "value"
@@ -37,13 +35,5 @@ ActiveRecord::Schema.define(:version => 20180503103109) do
 
   add_index "flexite_entries", ["parent_id"], :name => "index_flexite_entries_on_parent_id"
   add_index "flexite_entries", ["parent_type"], :name => "index_flexite_entries_on_parent_type"
-
-  create_table "flexite_sections", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "flexite_sections", [nil], :name => "index_flexite_sections_on_parent_id"
 
 end

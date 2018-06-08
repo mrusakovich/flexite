@@ -1,7 +1,7 @@
 module Flexite
   class Config::Form < BaseForm
-    attr_accessor :id, :name, :parent_id, :parent_type, :created_by, :selectable
-    validates :name, :parent_id, :parent_type, presence: true
+    attr_accessor :id, :name, :config_id, :created_by, :selectable
+    validates :name, presence: true
 
     def self.model_name
       Config.model_name

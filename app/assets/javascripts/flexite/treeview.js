@@ -758,9 +758,9 @@
         return this.nodes[nodeId];
     };
 
-    Tree.prototype.addToParent = function(node, parentId, parentType) {
+    Tree.prototype.addToParent = function(node, parentId) {
         var parent = this.nodes.find(function (node, index) {
-            return node.id == parentId && node.type === parentType
+            return node.id == parentId;
         });
 
         if (parent && parent.state.expanded) {

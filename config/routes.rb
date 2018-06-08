@@ -7,15 +7,10 @@ Flexite::Engine.routes.draw do
     end
   end
 
-  resources :sections
   resources :configs do
     resources :entries
+    resources :configs, only: :index
   end
 
-  resources :parents do
-    get :select, as: :select, on: :collection
-    get ':parent_type/configs' => 'parents#configs', constraints: { parent_type: /.*/ }, as: :configs
-  end
-
-  root to: 'sections#index'
+  root to: 'application#index'
 end

@@ -17,7 +17,6 @@ module Flexite
       g.template_engine :haml
     end
 
-    config.autoload_paths << "#{config.root}/app/models/concerns"
     config.action_controller.include_all_helpers = false
   end
 end

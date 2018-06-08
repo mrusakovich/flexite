@@ -50,9 +50,7 @@ module Flexite
     end
 
     def destroy_array_entry
-      klass = params[:type].constantize
-      form = klass.form(params)
-      result = ServiceFactory.instance.get(:destroy_array_entry, form).call
+      result = ServiceFactory.instance.get(:destroy_array_entry, Entry.form(params)).call
       @selector = params[:selector]
       service_flash(result)
       service_response(result)

@@ -1,19 +1,16 @@
 module Flexite
   class Config < ActiveRecord::Base
-    include Presentable
-
-    presenter :config
     attr_accessible :name
-    belongs_to :parent, polymorphic: true, touch: true
+    belongs_to :config, touch: true
     belongs_to :owner, foreign_key: :created_by
     has_one :entry, as: :parent, dependent: :destroy
-    has_many :configs, as: :parent, dependent: :destroy
-    delegate :value, :view_value, to: :entry, allow_nil: true
+    has_many :configs, dependent: :destroy
+
+    scope :not_selectable, -> { select([:id, :name]).where(selectable: false) }
 
     def to_tree_node
       {
         id: id,
-        type: self.class.name,
         selfHref: Engine.routes.url_helpers.config_path(self),
         text: name,
         dataHref: selectable ? entry_href : configs_href,
@@ -23,19 +20,15 @@ module Flexite
       }
     end
 
-    def self.tree_view(parent)
-      joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.parent_id = #{table_name}.id AND configs_#{table_name}.parent_type = '#{model_name}'")
+    def self.tree_view(parent_id)
+      joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.config_id = #{table_name}.id")
       .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id AND #{Entry.table_name}.parent_type = '#{model_name}'")
       .select(["#{table_name}.id", "#{table_name}.selectable", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count", "#{Entry.table_name}.id AS entry_id"])
-      .where(parent_id: parent.id, parent_type: parent.class.name).group("#{table_name}.id")
-    end
-
-    def self.parent_dropdown
-      select([:id, :name, :updated_at]).where(selectable: false)
+      .where(config_id: parent_id).group("#{table_name}.id")
     end
 
     def nodes_count
-      self[:nodes_count]
+      self[:nodes_count].to_i
     end
 
     def entry_id
@@ -61,7 +54,7 @@ module Flexite
     end
 
     def configs_href
-      Engine.routes.url_helpers.parent_configs_path(self, self.class.name.underscore, format: :json)
+      Engine.routes.url_helpers.config_configs_path(self, format: :json)
     end
   end
 end

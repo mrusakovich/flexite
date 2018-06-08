@@ -14,4 +14,5 @@
 //= require ./common
 //= require ./bootstrap.min
 //= require ./treeview
+//= require ./tree
 //
