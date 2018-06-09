@@ -28,15 +28,11 @@ module Flexite
 
     def cached_nodes
       cache.fetch(@@config.root_cache_prefix) do
-        nodes = {}
-
-        Config.where(config_id: nil).find_each do |root|
-          nodes[root.name] = cache.fetch(root) do
+        Config.where(config_id: nil).each_with_object({}) do |root, memo|
+          memo[root.name] = cache.fetch(root) do
             CachedNode.new(root)
           end
         end
-
-        nodes
       end
     end
   end
