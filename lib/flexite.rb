@@ -28,7 +28,7 @@ module Flexite
     end
 
     def cached_nodes
-      cache.fetch('all-cached-nodes') do
+      cache.fetch(@@config.root_cache_prefix) do
         nodes = {}
 
         Config.where(config_id: nil).find_each do |root|
