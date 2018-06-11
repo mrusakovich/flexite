@@ -30,6 +30,12 @@ module Flexite
       head :ok
     end
 
+    def reload
+      Flexite.reload_root_cache
+      flash[:success] = 'Cache was reloaded'
+      render partial: 'flexite/shared/show_flash'
+    end
+
     private
 
     def config_params

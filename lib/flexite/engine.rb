@@ -8,7 +8,7 @@ module Flexite
     end
 
     config.after_initialize do
-      Flexite.load
+      Flexite.load if Entry.table_exists?
     end
 
     initializer 'flexite.append_migrations' do |app|

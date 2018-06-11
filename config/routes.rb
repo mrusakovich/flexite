@@ -10,6 +10,7 @@ Flexite::Engine.routes.draw do
   resources :configs do
     resources :entries
     resources :configs, only: :index
+    get :reload, on: :collection
   end
 
   root to: 'application#index'

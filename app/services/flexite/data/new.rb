@@ -8,7 +8,11 @@ module Flexite
 
     def call
       @migrator.call.each do |root, configs|
-        @result[root] = save_root(root, configs)
+        begin
+          @result[root] = save_root(root, configs)
+        rescue => exc
+          @errors[root] << [exc.message, exc.backtrace]
+        end
       end
 
       @result.tap do |result|
@@ -21,7 +25,7 @@ module Flexite
     def save_root(root, configs)
       @result[root] = {}
 
-      Config.create(name: root) do |record|
+      Config.create!(name: root) do |record|
         begin
           save_hash_value(record, configs)
         rescue => exc
@@ -32,7 +36,6 @@ module Flexite
 
     def save_entry(parent, entry)
       send("save_#{entry.class.name.underscore}_value", parent, entry)
-      raise "#{Random.rand}"
     rescue => exc
       @errors[parent] << [exc.message, exc.backtrace]
     end

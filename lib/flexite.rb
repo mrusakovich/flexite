@@ -26,6 +26,11 @@ module Flexite
       Object.const_set(@@config.const_name, Class.new { extend Behavior })
     end
 
+    def reload_root_cache
+      cache.delete(@@config.root_cache_prefix)
+      cached_nodes
+    end
+
     def cached_nodes
       cache.fetch(@@config.root_cache_prefix) do
         Config.where(config_id: nil).each_with_object({}) do |root, memo|
