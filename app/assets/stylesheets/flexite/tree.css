@@ -1,0 +1,21 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+#tree-buttons div{
+    z-index: 1;
+}
+
+#tree-container {
+    padding-top: 40px;
+}
+
+.simple_form.edit_entry {
+    height: 800px;
+    overflow-y: auto;
+}
+
+.pos-fixed {
+    position: fixed;
+}

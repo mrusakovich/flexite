@@ -1,0 +1,4 @@
+$flexite("#section-2").html("#{j render 'form'}");
+= render 'flexite/shared/show_flash'
+
+tree.setDataHref("#{edit_entry_path(@entry, format: :js)}");

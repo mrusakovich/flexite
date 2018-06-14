@@ -8,6 +8,22 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
+ *= require ./bootstrap.min
+ *= require ./bootstrap-treeview.min
+ *= require ./tree
  */
+
+#flash .alert {
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#main-container {
+    padding-top: 65px;
+}
+
+button.close {
+    outline: none;
+}

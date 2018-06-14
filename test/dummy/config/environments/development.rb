@@ -1,3 +1,5 @@
+require 'active_support/core_ext/numeric/bytes'
+
 Dummy::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -29,6 +31,7 @@ Dummy::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  config.cache_store = :memory_store, { size: 64.megabytes }
   # Do not compress assets
   config.assets.compress = false
 

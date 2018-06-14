@@ -1,0 +1,5 @@
+.row
+  - flash.each do |type, value|
+    .col-md-8.alert{ class: "alert-#{type}", role: :alert }
+      %strong
+        = value

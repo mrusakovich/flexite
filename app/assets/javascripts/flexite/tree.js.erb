@@ -1,0 +1,83 @@
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+$flexite(window).on('load', function () {
+    var $tree = $flexite("#tree");
+    window.tree = new Tree($tree);
+    tree.init();
+
+    $flexite("#delete-node-btn").on("click", function () {
+        $tree.treeview("getSelected").forEach(function (node) {
+            $flexite.ajax({
+                url: node.selfHref,
+                type: 'DELETE',
+                success: function () {
+                    $tree.treeview("removeNode", node);
+                    $flexite("#section-2").html("");
+                }
+            });
+        })
+
+    });
+
+    $flexite("#edit-node-btn").on("click", function () {
+        $tree.treeview("getSelected").forEach(function (node) {
+            $flexite.get(node.editHref);
+        })
+    });
+
+    $flexite("#new-node-btn").on("click", function () {
+        var selected = $tree.treeview("getSelected");
+
+        if(selected.length) {
+            selected.forEach(function (node) {
+                $flexite.get(node.newHref);
+            })
+        } else {
+            $flexite.get("<%= new_config_path %>");
+        }
+    });
+});
+
+function Tree(selector) {
+    var self = this, tree = $flexite(selector);
+
+    this.init = function () {
+        $flexite.get("<%= configs_path(format: :json) %>", function (data) {
+            tree.treeview({
+                data: data,
+                onNodeExpanded: function (event, node) {
+                    $flexite.get(node.dataHref, function (nodes) {
+                        tree.treeview(true).addNodes(nodes, node.nodeId);
+                    });
+                },
+                onNodeCollapsed: function (event, node) {
+                    tree.treeview(true).removeNodes(node.nodeId);
+                },
+                onNodeSelected: function (event, node) {
+                    if (node.ajaxOnSelect) $flexite.get(node.dataHref);
+                },
+                onNodeUnselected: function (event, node) {
+                    $flexite("#section-2").html("");
+                }
+            })
+        })
+    }
+
+    this.reload = function () {
+        tree.treeview("remove");
+        self.init();
+    }
+
+    this.addNode = function (jsonNode, parentId) {
+        tree.treeview(true).addToParent(JSON.parse(jsonNode), parentId);
+    }
+
+    this.editNode = function(jsonNode) {
+        tree.treeview(true).editNode(JSON.parse(jsonNode));
+    }
+
+    this.setDataHref = function (dataHref) {
+        var node = tree.treeview("getSelected")[0];
+        node.dataHref = dataHref;
+    }
+}

@@ -1,0 +1,14 @@
+#tree-buttons.row
+  .col-md-4.pos-fixed
+    %button#new-node-btn.btn.btn-success New node
+    %button#edit-node-btn.btn.btn-success Edit node
+    %button#delete-node-btn.btn.btn-danger Delete
+    = link_to 'Reload cache', reload_configs_path, remote: true, class: 'btn btn-info'
+    = back_to_app
+.row#tree-container
+  .col-md-4
+    #tree
+  .col-md-4
+    #section-2.pos-fixed
+  .col-md-4
+    #section-3.pos-fixed
