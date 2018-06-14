@@ -1,5 +1,4 @@
 require 'flexite/engine'
-require 'simple_form'
 require 'hashie'
 
 module Flexite
