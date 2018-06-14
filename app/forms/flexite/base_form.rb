@@ -9,7 +9,7 @@ class Flexite::BaseForm
     @attributes = HashWithIndifferentAccess.new
 
     attributes.each do |name, value|
-      send("#{name}=", value) rescue nil
+      send("#{name}=", value) rescue next
       @attributes[name] = value
     end
   end

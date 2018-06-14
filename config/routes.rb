@@ -9,7 +9,7 @@ Flexite::Engine.routes.draw do
 
   resources :configs do
     resources :entries
-    resources :configs, only: :index
+    resources :configs, only: [:index, :new]
     get :reload, on: :collection
   end
 

@@ -7,5 +7,9 @@ module Flexite
 
       yield(model.presenter(self))
     end
+
+    def back_to_app
+      link_to "Back to #{Flexite.config.app_name}", Flexite.config.app_link, class: 'btn btn-default'
+    end
   end
 end

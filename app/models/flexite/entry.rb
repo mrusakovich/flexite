@@ -21,7 +21,7 @@ module Flexite
     private
 
     def cast_value
-      self.value = value.to_s
+      self[:value] = self[:value].to_s
     end
 
     def check_value

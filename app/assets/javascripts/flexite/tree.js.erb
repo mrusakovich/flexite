@@ -18,6 +18,24 @@ $flexite(window).on('load', function () {
         })
 
     });
+
+    $flexite("#edit-node-btn").on("click", function () {
+        $tree.treeview("getSelected").forEach(function (node) {
+            $flexite.get(node.editHref);
+        })
+    });
+
+    $flexite("#new-node-btn").on("click", function () {
+        var selected = $tree.treeview("getSelected");
+
+        if(selected.length) {
+            selected.forEach(function (node) {
+                $flexite.get(node.newHref);
+            })
+        } else {
+            $flexite.get("<%= new_config_path %>");
+        }
+    });
 });
 
 function Tree(selector) {
@@ -52,6 +70,10 @@ function Tree(selector) {
 
     this.addNode = function (jsonNode, parentId) {
         tree.treeview(true).addToParent(JSON.parse(jsonNode), parentId);
+    }
+
+    this.editNode = function(jsonNode) {
+        tree.treeview(true).editNode(JSON.parse(jsonNode));
     }
 
     this.setDataHref = function (dataHref) {

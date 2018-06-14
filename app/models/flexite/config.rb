@@ -13,7 +13,9 @@ module Flexite
     def to_tree_node
       {
         id: id,
+        editHref: Engine.routes.url_helpers.edit_config_path(self),
         selfHref: Engine.routes.url_helpers.config_path(self),
+        newHref: Engine.routes.url_helpers.new_config_config_path(self),
         text: name,
         dataHref: selectable ? entry_href : configs_href,
         nodes: nodes,

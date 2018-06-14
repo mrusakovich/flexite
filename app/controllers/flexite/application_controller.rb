@@ -1,4 +1,4 @@
-require_dependency 'flexite/application_controller'
+require_dependency 'flexite/service_factory'
 
 module Flexite
   class ApplicationController < ActionController::Base

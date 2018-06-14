@@ -1,3 +1,3 @@
 puts 'Seeding database'
-Flexite::Data::New.new(Flexite::Data::Migrators::Yaml.new({ app: ["#{Rails.root}/config/application.yml"] })).call
+Flexite::Data::New.new(Flexite::Data::Migrators::Yaml.new).call
 puts 'Finished'

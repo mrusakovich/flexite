@@ -24,7 +24,7 @@ module Flexite
     end
 
     def edit
-      @entry = Entry.find_by_id(params[:id])
+      @entry = Entry.find(params[:id])
       @entry_form = @entry.class.form(@entry.form_attributes)
     end
 

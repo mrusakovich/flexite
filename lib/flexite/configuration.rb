@@ -1,13 +1,16 @@
 module Flexite
   class Configuration
-    attr_accessor :const_name, :paths, :root_cache_prefix
+    attr_accessor :paths, :root_cache_key, :source_roots, :hierarchy
+    attr_accessor :app_link, :app_name
     attr_reader :cache
 
     def initialize
-      @const_name = :Flexy
       @paths = {}
-      @root_cache_prefix = 'all-cached-nodes'
+      @root_cache_key = 'all-cached-nodes'
       @cache = ActiveSupport::Cache::MemoryStore.new(size: 64.megabytes)
+      @app_link = '/'
+      @source_roots = {}
+      @hierarchy = {}
     end
 
     def cache_store=(*args)

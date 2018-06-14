@@ -1,3 +1,5 @@
+require_dependency 'flexite/base_factory'
+
 module Flexite
   class ServiceFactory < BaseFactory
     def initialize
@@ -10,6 +12,7 @@ module Flexite
         entry_destroy: 'Entry::DestroyService',
         arr_entry_destroy: 'Entry::DestroyService',
         destroy_array_entry: 'Entry::DestroyArrayEntryService',
+        update_config: 'Config::UpdateService'
       }
     end
   end

@@ -102,6 +102,7 @@
 
             // Get methods
             addNodes: $.proxy(this.addNodes, this),
+            editNode: $.proxy(this.editNode, this),
             addToParent: $.proxy(this.addToParent, this),
             removeNodes: $.proxy(this.removeNodes, this),
             removeNode: $.proxy(this.removeNode, this),
@@ -771,6 +772,20 @@
             this.tree.push(node);
         }
 
+        this.nodes = [];
+        this.destroy();
+        this.subscribeEvents();
+        this.setInitialStates({ nodes: this.tree }, 0);
+        this.render();
+    };
+
+    Tree.prototype.editNode = function(editedNode) {
+        var node = this.nodes.find(function (node, index) {
+            return node.id == editedNode.id;
+        });
+
+        delete editedNode.nodes;
+        Object.assign(node, editedNode);
         this.nodes = [];
         this.destroy();
         this.subscribeEvents();

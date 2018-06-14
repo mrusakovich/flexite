@@ -7,10 +7,6 @@ module Flexite
       app.config.assets.paths << File.join(root, 'app', 'assets', 'fonts')
     end
 
-    config.after_initialize do
-      Flexite.load if Entry.table_exists?
-    end
-
     initializer 'flexite.append_migrations' do |app|
       paths['db/migrate'].expanded.each do |migration|
         app.paths['db/migrate'] << migration

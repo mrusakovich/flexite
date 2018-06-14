@@ -2,7 +2,7 @@ desc 'Base engine tasks'
 namespace :flexite do
   task convert_yml: :environment do
     puts 'Converting....'
-    result = Flexite::Data::New.new(Flexite::Data::Migrators::Yaml.new(Flexite.config.paths)).call
+    result = Flexite::Data::New.new(Flexite::Data::Migrators::Yaml.new).call
     puts 'Finished'
     puts 'Errors:'
 

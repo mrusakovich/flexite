@@ -1,7 +1,11 @@
 module Flexite
   class BoolEntry < Entry
+    def value
+      self[:value].to_i  == 1 ? true : false
+    end
+
     def form
-      Entry::Form.new(attributes.merge(value: value.to_i))
+      Entry::Form.new(attributes.merge(value: self[:value].to_i))
     end
 
     private

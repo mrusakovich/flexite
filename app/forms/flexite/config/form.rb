@@ -1,3 +1,5 @@
+require_dependency 'flexite/base_form'
+
 module Flexite
   class Config::Form < BaseForm
     attr_accessor :id, :name, :config_id, :created_by, :selectable

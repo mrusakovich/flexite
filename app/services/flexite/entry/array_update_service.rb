@@ -1,3 +1,5 @@
+require_dependency 'flexite/action_service'
+
 module Flexite
   class Entry::ArrayUpdateService < ActionService
     def call
