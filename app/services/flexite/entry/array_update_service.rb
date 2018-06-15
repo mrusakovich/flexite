@@ -1,69 +1,55 @@
 require_dependency 'flexite/action_service'
 
 module Flexite
-  class Entry::ArrayUpdateService < ActionService
-    def call
-      if @form.invalid?
-        return failure
+  class Entry
+    class ArrayUpdateService < ActionService
+      include InnerProcessable
+
+      def call
+        if @form.invalid?
+          return failure
+        end
+
+        process_entry
       end
 
-      process_entries
-    end
+      private
 
-    private
+      def process_entry
+        Entry.transaction(requires_new: true) do
+          update_entries(@form.entries)
+          create_entries
+        end
 
-    def process_entries
-      Entry.transaction do
-        update_entries(@form.entries)
-        create_entries(@form.new_entries, @form.id)
+        process_result('Entry was updated')
       end
 
-      success
-    rescue => exc
-      exc_failure(exc)
-    end
-
-    def update_entries(entries)
-      entries.each do |_, entry|
-        if respond_to?("save_#{entry[:type].demodulize.underscore}", true)
-          send("save_#{entry[:type].demodulize.underscore}", entry)
-        else
+      def update_entries(entries)
+        entries.each do |_, entry|
           save_entry(entry)
         end
       end
-    end
 
-    def create_entries(new_entries, parent_id)
-      return if new_entries.blank?
-
-      new_entries.each do |_, entry|
-        klass = entry[:type].constantize
-        klass.create({parent_id: parent_id, parent_type: klass.base_class.sti_name, value: entry[:value]}, without_protection: true)
+      def save_entry(entry)
+        call_service_for(:update, entry)
       end
-    end
 
+      def create_entries
+        return if @form.new_entries.blank?
 
-    def save_arr_entry(entry)
-      update_entries(entry[:entries])
-      create_entries(entry[:new_entries], entry[:id])
-    end
+        @form.new_entries.each do |_, entry|
+          entry[:parent_id] = @form.id
+          entry[:parent_type] = @form.type.constantize.base_class.sti_name
+          call_service_for(:create, entry)
+        end
+      end
 
-    def save_entry(entry)
-      entry[:type].constantize.update(entry[:id], value: entry[:value])
-    end
+      protected
 
-    protected
-
-    def failure
-      Result.new(success: false, endpoint: { status: 400 })
-    end
-
-    def exc_failure(exc)
-      Result.new(success: false, message: exc.message, endpoint: { status: 500 })
-    end
-
-    def success
-      Result.new(flash: { type: :success, message: 'Entry was updated!' })
+      def failure
+        save_errors
+        Result.new(success: false, endpoint: { status: 400 })
+      end
     end
   end
 end

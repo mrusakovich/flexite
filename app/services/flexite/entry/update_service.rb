@@ -16,6 +16,7 @@ module Flexite
     protected
 
     def failure
+      save_errors
       Result.new(success: false, endpoint: { status: 400 })
     end
 

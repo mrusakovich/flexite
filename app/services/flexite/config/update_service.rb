@@ -21,7 +21,7 @@ module Flexite
       end
 
       def success
-        Result.new(flash: { type: :success, message: 'Config was updated!' }, data: { record: @record })
+        Result.new(flash: { type: :success, message: 'Config was updated!' }, data: @record)
       end
     end
   end

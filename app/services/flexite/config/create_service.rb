@@ -19,7 +19,7 @@ module Flexite
 
     def success
       Result.new(flash: { type: :success, message: 'Config was created!' },
-                 data: { record: @record })
+                 data: @record)
     end
   end
 end

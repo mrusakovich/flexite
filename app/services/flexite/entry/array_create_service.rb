@@ -3,6 +3,8 @@ require_dependency 'flexite/action_service'
 module Flexite
   class Entry
     class ArrayCreateService < ActionService
+      include InnerProcessable
+
       def call
         if @form.invalid?
           return failure
@@ -19,50 +21,36 @@ module Flexite
           record.parent_type = @form.parent_type
         end
 
-        Entry.transaction do
-          create_entries(@form.new_entries, @record.id)
+        Entry.transaction(requires_new: true) do
+          create_entries(@form.new_entries)
         end
 
-        success
-      rescue => exc
-        exc_failure(exc)
+        if @process_result.succeed?
+          @process_result.options[:data] = @record
+        end
+
+        process_result('Entry was created')
       end
 
-      def create_entries(new_entries, parent_id)
+      def create_entries(new_entries)
         return if new_entries.blank?
 
         new_entries.each do |_, entry|
-          if respond_to?("save_#{entry[:type].demodulize.underscore}", true)
-            send("save_#{entry[:type].demodulize.underscore}", entry, parent_id)
-          else
-            save_entry(entry, parent_id)
-          end
+          entry[:parent_id] = @record.id
+          entry[:parent_type] = @form.type.constantize.base_class.sti_name
+          save_entry(entry)
         end
       end
 
-      def save_arr_entry(entry, parent_id)
-        klass = entry[:type].constantize
-        record = klass.create({ parent_id: parent_id, parent_type: klass.base_class.sti_name }, without_protection: true)
-        create_entries(entry[:new_entries], record.id)
-      end
-
-      def save_entry(entry, parent_id)
-        klass = entry[:type].constantize
-        klass.create({ parent_id: parent_id, parent_type: klass.base_class.sti_name, value: entry[:value] }, without_protection: true)
+      def save_entry(entry)
+        call_service_for(:create, entry)
       end
 
       protected
 
       def failure
+        save_errors
         Result.new(success: false, endpoint: { status: 400 })
-      end
-
-      def exc_failure(exc)
-        Result.new(success: false, message: exc.message, endpoint: { status: 500 })
-      end
-
-      def success
-        Result.new(flash: { type: :success, message: 'Entry was created!' }, data: { record: @record })
       end
     end
   end

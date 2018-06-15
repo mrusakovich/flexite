@@ -9,7 +9,7 @@ module Flexite
     ].freeze
 
     def render_entries(entries, form)
-      content_tag :div, id: "array-entries-#{form.options[:index]}" do
+      content_tag :div, id: "#{form.object_name}-array-entries-#{form.options[:index]}" do
         entries.each_with_index do |entry, index|
           concat render_entry(entry, form, index)
         end

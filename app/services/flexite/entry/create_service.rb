@@ -20,11 +20,7 @@ module Flexite
       private
 
       def success
-        Result.new(flash: { type: :success, message: 'Entry was created!' }, data: { record: @record })
-      end
-
-      def failure
-        Result.new(success: false, endpoint: { status: 400 })
+        Result.new(flash: { type: :success, message: 'Entry was created!' }, data: @record)
       end
     end
   end
