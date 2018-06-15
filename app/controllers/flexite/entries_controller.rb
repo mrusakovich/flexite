@@ -10,12 +10,10 @@ module Flexite
     end
 
     def create
-      klass = entry_params[:type].constantize
-      form = klass.form(entry_params)
-      result = ServiceFactory.instance.get(klass.service(:create), form).call
+      result = call_service_for(:create, entry_params)
 
       if result.succeed?
-        @entry = result.data[:record]
+        @entry = result.record
         @entry_form = @entry.class.form(@entry.form_attributes)
       end
 
@@ -29,16 +27,18 @@ module Flexite
     end
 
     def update
-      klass = entry_params[:type].constantize
-      form = klass.form(entry_params)
-      result = ServiceFactory.instance.get(klass.service(:update), form).call
+      result = call_service_for(:update, entry_params)
+      @entry = Entry.find(entry_params[:id])
+      @entry_form = @entry.class.form(@entry.form_attributes)
       service_flash(result)
       service_response(result)
     end
 
     def new_array_entry
       klass = params[:type].constantize
-      @form_options = [params[:prefix]]
+
+      @prefix = params[:prefix]
+      @form_options = [@prefix]
 
       if (@form_index = params[:form_index]).present?
         @form_options << { index: @form_index }
@@ -57,9 +57,7 @@ module Flexite
     end
 
     def destroy
-      klass = params[:type].constantize
-      form = klass.form(id: params[:id])
-      result = ServiceFactory.instance.get(klass.service(:destroy), form).call
+      result = call_service_for(:destroy, params)
 
       if result.succeed?
         @parent_id = result.data[:parent_id]
@@ -77,6 +75,12 @@ module Flexite
 
     def entry_params
       params[:entry]
+    end
+
+    def call_service_for(type, entry)
+      klass = entry[:type].constantize
+      form = klass.form(entry)
+      ServiceFactory.instance.get(klass.service(type), form).call
     end
   end
 end

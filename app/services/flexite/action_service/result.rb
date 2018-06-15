@@ -1,4 +1,6 @@
 class Flexite::ActionService::Result
+  attr_accessor :options
+
   def initialize(options = {})
     @options = options
     @errors = Hash.new { |h, k| h[k] = [] }

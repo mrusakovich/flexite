@@ -18,7 +18,7 @@ module Flexite
       result = ServiceFactory.instance.get(:config_create, Config::Form.new(config_params)).call
 
       if result.succeed?
-        @node = result.data[:record].to_tree_node
+        @node = result.record.to_tree_node
         @parent_id = config_params[:config_id]
       end
 
@@ -34,7 +34,7 @@ module Flexite
       result = ServiceFactory.instance.get(:update_config, Config::Form.new(config_params)).call
 
       if result.succeed?
-        @node = result.data[:record].to_tree_node
+        @node = result.record.to_tree_node
       end
 
       service_flash(result)
