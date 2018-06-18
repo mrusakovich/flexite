@@ -2,18 +2,18 @@
 
 .form-group.form-inline
   = entry_type_select
-  = f.button :button, 'Add entry', type: :button, class: 'btn btn-success', id: "add_array_entry-#{f.object.id}"
+  = f.button :button, 'Add entry', type: :button, class: 'btn btn-success', id: "add-entry-to-#{f.object_name}-#{f.object.id}-#{f.options[:index]}"
   - if local_assigns[:delete_link].present?
     = delete_link
 
 -# TODO: fix index population related to array entry vs simple entry
 :javascript
-  $flexite("#add_array_entry-#{f.object.id}").on("click", function () {
+  $flexite("[id='add-entry-to-#{f.object_name}-#{f.object.id}-#{f.options[:index]}']").on("click", function () {
     $flexite.get("#{new_array_entries_path}", {
       parent_id: "#{f.object.id}",
       form_index: "#{f.options[:index]}",
       prefix: "#{f.object_name}",
-      index: $flexite("[id^='entry_new_entries_'][id$='_value']").size(),
+      index: $flexite("[id^='entry_new_entries_'][id$='type']").size(),
       type: $flexite(this).parent().find("#new_entry_type").val()
     });
   });
