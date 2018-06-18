@@ -12,5 +12,13 @@ module Flexite
     def view_type
       type.demodulize.underscore
     end
+
+    def history_type
+      Entry.name.underscore
+    end
+
+    def with_history?
+      persisted?
+    end
   end
 end

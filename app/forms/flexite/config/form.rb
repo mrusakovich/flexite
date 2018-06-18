@@ -8,5 +8,9 @@ module Flexite
     def self.model_name
       Config.model_name
     end
+
+    def history_type
+      Config.name.underscore
+    end
   end
 end

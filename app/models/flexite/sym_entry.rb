@@ -13,5 +13,6 @@ class Flexite::SymEntry < Flexite::Entry
     self[:value].to_sym
   rescue
     errors(:value, 'cannot be casted to Symbol')
+    false
   end
 end

@@ -6,6 +6,10 @@ module Flexite
       def entries
         @entries ||= []
       end
+
+      def with_history?
+        false
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 = simple_form_for @entry_form, remote: true do |f|
   - if @entry_form.type.present?
-    = render "types/#{@entry_form.view_type}", f: f
+    = render "flexite/entries/types/#{@entry_form.view_type}", f: f
   = f.input :id, as: :hidden
   = f.input :type, as: :hidden
   = f.input :parent_id, as: :hidden
@@ -9,3 +9,5 @@
 
   - if @entry_form.persisted?
     = link_to 'Delete', entry_path(f.object, type: @entry_form.type), method: :delete, remote: true, class: 'btn btn-danger'
+  - if @entry_form.with_history?
+    = link_to 'History', entity_history_path(@entry_form.id, @entry_form.history_type), remote: true, class: 'btn btn-default'

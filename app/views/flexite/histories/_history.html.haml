@@ -1,0 +1,11 @@
+- history.history_attributes.each do |attr|
+  .history-attribute
+    = "#{attr.name}: "
+    = attr.value
+
+.history-created-at
+  created at:
+  = history.created_at.to_s(:db)
+
+.history-restore
+  = link_to 'Restore', history_restore_path(history), remote: true, class: 'btn btn-warning'

@@ -1,13 +1,18 @@
 module Flexite
   class Config < ActiveRecord::Base
+    include WithHistory
     attr_accessible :name
+    history_attributes :name, :config_id
+    delegate :value, to: :entry, allow_nil: true
+
     belongs_to :config, touch: true
     belongs_to :owner, foreign_key: :created_by
     has_one :entry, as: :parent, dependent: :destroy
     has_many :configs, dependent: :destroy
+    has_many :histories, as: :entity, dependent: :destroy
 
     scope :not_selectable, -> { select([:id, :name]).where(selectable: false) }
-    delegate :value, to: :entry, allow_nil: true
+
     validates :name, uniqueness: { scope: :config_id }
 
     def to_tree_node
