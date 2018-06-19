@@ -2,3 +2,5 @@
   = f.input :value, as: :integer, input_html: { class: 'form-control', placeholder: 'Number' }, label: false
   - if local_assigns[:delete_link].present?
     = delete_link
+  - if local_assigns[:history_link].present?
+    = history_link

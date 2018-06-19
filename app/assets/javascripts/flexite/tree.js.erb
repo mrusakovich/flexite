@@ -58,6 +58,7 @@ function Tree(selector) {
                 },
                 onNodeUnselected: function (event, node) {
                     $flexite("#section-2").html("");
+                    $flexite("#section-3").html("");
                 }
             })
         })
@@ -66,6 +67,12 @@ function Tree(selector) {
     this.reload = function () {
         tree.treeview("remove");
         self.init();
+    }
+
+    this.unselectAll = function () {
+        tree.treeview("getSelected").forEach(function (node) {
+            tree.treeview("unselectNode", node);
+        });
     }
 
     this.addNode = function (jsonNode, parentId) {

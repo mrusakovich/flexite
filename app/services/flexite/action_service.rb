@@ -1,6 +1,4 @@
 class Flexite::ActionService
-  extend ActiveSupport::Autoload
-  autoload :Result
 
   def initialize(form, params = {})
     @form = form
@@ -33,3 +31,5 @@ class Flexite::ActionService
     end
   end
 end
+
+require_dependency 'flexite/action_service/result'

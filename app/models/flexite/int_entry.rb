@@ -9,5 +9,6 @@ class Flexite::IntEntry < Flexite::Entry
     self[:value].to_i
   rescue
     errors.add(:value, 'not an Integer')
+    false
   end
 end

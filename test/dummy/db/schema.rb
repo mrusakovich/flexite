@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180503103109) do
+ActiveRecord::Schema.define(:version => 20180618115057) do
 
   create_table "flexite_configs", :force => true do |t|
     t.string   "name"
@@ -35,5 +35,25 @@ ActiveRecord::Schema.define(:version => 20180503103109) do
 
   add_index "flexite_entries", ["parent_id"], :name => "index_flexite_entries_on_parent_id"
   add_index "flexite_entries", ["parent_type"], :name => "index_flexite_entries_on_parent_type"
+
+  create_table "flexite_histories", :force => true do |t|
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "flexite_histories", ["entity_id"], :name => "index_flexite_histories_on_entity_id"
+  add_index "flexite_histories", ["entity_type"], :name => "index_flexite_histories_on_entity_type"
+
+  create_table "flexite_history_attributes", :force => true do |t|
+    t.integer  "history_id"
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "flexite_history_attributes", ["history_id"], :name => "index_flexite_history_attributes_on_history_id"
 
 end

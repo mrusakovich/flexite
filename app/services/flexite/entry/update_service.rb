@@ -6,8 +6,13 @@ module Flexite
       if @form.invalid?
         return failure
       end
+      record = @form.type.constantize.find(@form.id)
+      record.value = @form.value
 
-      @form.type.constantize.update(@form.id, value: @form.value)
+      if record.changed?
+        record.save
+      end
+
       success
     end
 

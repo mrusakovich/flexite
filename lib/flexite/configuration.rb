@@ -1,7 +1,7 @@
 module Flexite
   class Configuration
     attr_accessor :paths, :root_cache_key, :source_roots, :hierarchy
-    attr_accessor :app_link, :app_name
+    attr_accessor :app_link, :app_name, :history_limit
     attr_reader :cache
 
     def initialize
@@ -11,6 +11,7 @@ module Flexite
       @app_link = '/'
       @source_roots = {}
       @hierarchy = {}
+      @history_limit = 10
     end
 
     def cache_store=(*args)

@@ -1,7 +1,12 @@
 module Flexite
   class Entry < ActiveRecord::Base
-    belongs_to :parent, polymorphic: true, touch: true
+    include WithHistory
     attr_accessible :value
+    history_attributes :value
+
+    belongs_to :parent, polymorphic: true, touch: true
+    has_many :histories, as: :entity, dependent: :destroy
+
     before_save :check_value, :cast_value
 
     def view_value
