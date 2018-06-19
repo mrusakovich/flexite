@@ -2,6 +2,6 @@
   = f.simple_fields_for :new_entries, @entry_form, index: @index do |f|
     %div{ id: "#{f.object_name}-#{@index}" }
       = f.input :type, as: :hidden
-      = render "types/#{@entry_form.view_type}", f: f,
+      = render "flexite/entries/types/#{@entry_form.view_type}", f: f,
         delete_link: link_to('Delete', destroy_array_entries_path(id: nil, type: @entry_form.type, selector: "#{f.object_name}-#{@index}"),
                                   remote: true, method: :delete, class: 'btn btn-danger')
