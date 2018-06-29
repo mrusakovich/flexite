@@ -3,7 +3,7 @@
   They will automatically be included in application.css.
 */
 
-#tree-buttons div{
+#tree-buttons div {
     z-index: 1;
 }
 
@@ -11,11 +11,35 @@
     padding-top: 40px;
 }
 
-.simple_form.edit_entry {
+.pos-fixed {
+    position: fixed;
+}
+
+[id^='section'] {
     height: 800px;
     overflow-y: auto;
 }
 
-.pos-fixed {
-    position: fixed;
+.change-diff-btn {
+    background-color: orange;
+}
+
+.addition-diff-btn {
+    background-color: green;
+}
+
+.deletion-diff-btn {
+    background-color: red;
+}
+
+.change-diff {
+    background-color: orange;
+}
+
+.deletion-diff {
+    background-color: red;
+}
+
+.addition-diff {
+    background-color: green;
 }

@@ -22,6 +22,18 @@ module Flexite
       "arr_entry_#{type}".to_sym
     end
 
+    def t_node
+      node = {
+        'type' => I18n.t("models.#{self.class.name.demodulize.underscore}")
+      }
+
+      if entries.any?
+        node.merge!('entries' => entries.map(&:t_node))
+      end
+
+      node
+    end
+
     private
 
     def form_entries

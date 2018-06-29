@@ -1,6 +1,7 @@
 module Flexite
   class Entry < ActiveRecord::Base
     include WithHistory
+
     attr_accessible :value
     history_attributes :value
 
@@ -8,10 +9,6 @@ module Flexite
     has_many :histories, as: :entity, dependent: :destroy
 
     before_save :check_value, :cast_value
-
-    def view_value
-      value.to_s
-    end
 
     def self.form(attributes = {})
       Form.new(attributes)
@@ -22,6 +19,13 @@ module Flexite
     end
 
     alias :form_attributes :attributes
+
+    def t_node
+      {
+        'value' => self[:value],
+        'type' => I18n.t("models.#{self.class.name.demodulize.underscore}")
+      }
+    end
 
     private
 

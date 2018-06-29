@@ -12,7 +12,11 @@ module Flexite
         entry_destroy: 'Entry::DestroyService',
         arr_entry_destroy: 'Entry::DestroyService',
         destroy_array_entry: 'Entry::DestroyArrayEntryService',
-        update_config: 'Config::UpdateService'
+        update_config: 'Config::UpdateService',
+        check_diff: 'Diff::CheckService',
+        show_diff: 'Diff::ShowService',
+        apply_to_diff: 'Diff::ApplyService',
+        apply_from_diff: 'Diff::ApplyService'
       }
     end
   end

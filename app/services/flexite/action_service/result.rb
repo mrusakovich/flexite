@@ -3,11 +3,11 @@ class Flexite::ActionService::Result
 
   def initialize(options = {})
     @options = options
-    @errors = Hash.new { |h, k| h[k] = [] }
+    @errors = ::Hash.new { |h, k| h[k] = [] }
   end
 
   def succeed?
-    @options.fetch(:succeed, true)
+    @options.fetch(:success, true)
   end
 
   def failed?

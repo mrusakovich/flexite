@@ -1,27 +1,27 @@
 module Flexite
   class Config < ActiveRecord::Base
     include WithHistory
-    attr_accessible :name
-    history_attributes :name, :config_id
-    delegate :value, to: :entry, allow_nil: true
 
+    attr_accessible :name, :selectable, :config_id, :description
+    history_attributes :name, :config_id, :description
+
+    delegate :value, to: :entry, allow_nil: true
     belongs_to :config, touch: true
-    belongs_to :owner, foreign_key: :created_by
     has_one :entry, as: :parent, dependent: :destroy
     has_many :configs, dependent: :destroy
     has_many :histories, as: :entity, dependent: :destroy
-
     scope :not_selectable, -> { select([:id, :name]).where(selectable: false) }
-
+    scope :roots, -> { where(config_id: nil) }
     validates :name, uniqueness: { scope: :config_id }
+    before_create :set_description
 
-    def to_tree_node
+    def tv_node
       {
         id: id,
         editHref: Engine.routes.url_helpers.edit_config_path(self),
         selfHref: Engine.routes.url_helpers.config_path(self),
         newHref: Engine.routes.url_helpers.new_config_config_path(self),
-        text: name,
+        text: description,
         dataHref: selectable ? entry_href : configs_href,
         nodes: nodes,
         selectable: true,
@@ -31,9 +31,15 @@ module Flexite
 
     def self.tree_view(parent_id)
       joins("LEFT JOIN #{table_name} AS configs_#{table_name} ON configs_#{table_name}.config_id = #{table_name}.id")
-      .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id AND #{Entry.table_name}.parent_type = '#{model_name}'")
-      .select(["#{table_name}.id", "#{table_name}.selectable", "#{table_name}.name", "#{table_name}.updated_at", "COUNT(configs_#{table_name}.id) as nodes_count", "#{Entry.table_name}.id AS entry_id"])
-      .where(config_id: parent_id).group("#{table_name}.id")
+        .joins("LEFT JOIN #{Entry.table_name} ON #{Entry.table_name}.parent_id = #{table_name}.id AND #{Entry.table_name}.parent_type = '#{model_name}'")
+        .select(["#{table_name}.id",
+                 "#{table_name}.selectable",
+                 "#{table_name}.description",
+                 "#{table_name}.name",
+                 "#{table_name}.updated_at",
+                 "COUNT(configs_#{table_name}.id) AS nodes_count",
+                 "#{Entry.table_name}.id AS entry_id"])
+        .where(config_id: parent_id).group("#{table_name}.id")
     end
 
     def nodes_count
@@ -52,7 +58,37 @@ module Flexite
       nodes_count > 0 ? [] : nil
     end
 
+    def self.t_nodes
+      roots.includes(:configs, :entry).map(&:t_node)
+    end
+
+    def t_node
+      node = {
+        'name' => name,
+        'description' => description
+      }
+
+      if configs.any?
+        node.merge!('configs' => configs.includes(:configs, :entry).map(&:t_node))
+      end
+
+      if entry.present?
+        node.merge!('entry' => entry.t_node)
+      end
+
+      node
+    end
+
+    def t_entry_index(entry)
+      "#{entry.class.name.demodulize.underscore}-0"
+    end
+
     private
+
+    def set_description
+      return if description.present?
+      self.description = name
+    end
 
     def entry_href
       if entry_id.present?

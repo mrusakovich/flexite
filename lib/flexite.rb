@@ -1,5 +1,6 @@
 require 'flexite/engine'
 require 'hashie'
+require 'hashdiff'
 
 module Flexite
   extend ActiveSupport::Autoload
@@ -9,10 +10,11 @@ module Flexite
   autoload :NodesHash
   autoload :CachedNode
   autoload :Config
+  autoload :Entry
 
   mattr_reader :config
   @@config = Configuration.new
-  @@loaded = false
+
   Object.const_set(:Flexy, Flexy)
 
   class << self
@@ -27,6 +29,10 @@ module Flexite
     def reload_root_cache
       cache.delete(@@config.root_cache_key)
       cached_nodes
+    end
+
+    def state_digest
+      Digest::MD5.hexdigest("#{Config.maximum(:updated_at)}#{Entry.maximum(:updated_at)}#{Config.count}#{Entry.count}")
     end
 
     def cached_nodes

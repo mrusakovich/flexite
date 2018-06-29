@@ -15,10 +15,11 @@ module Flexite
     end
 
     def create
-      result = ServiceFactory.instance.get(:config_create, Config::Form.new(config_params)).call
+      @config_form = Config::Form.new(config_params)
+      result = ServiceFactory.instance.get(:config_create, @config_form).call
 
       if result.succeed?
-        @node = result.record.to_tree_node
+        @node = result.record.tv_node
         @parent_id = config_params[:config_id]
       end
 
@@ -31,10 +32,11 @@ module Flexite
     end
 
     def update
-      result = ServiceFactory.instance.get(:update_config, Config::Form.new(config_params)).call
+      @config_form = Config::Form.new(config_params)
+      result = ServiceFactory.instance.get(:update_config, @config_form).call
 
       if result.succeed?
-        @node = result.record.to_tree_node
+        @node = result.record.tv_node
       end
 
       service_flash(result)

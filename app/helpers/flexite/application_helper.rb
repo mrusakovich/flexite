@@ -1,11 +1,8 @@
 module Flexite
   module ApplicationHelper
-    def present(model)
-      unless model.respond_to?(:presenter)
-        raise "#{model.class.name} is not presentable"
-      end
-
-      yield(model.presenter(self))
+    def present(*args, presenter)
+      klass = "Flexite::#{presenter.to_s.camelize}Presenter".constantize
+      yield(klass.new(*args))
     end
 
     def back_to_app

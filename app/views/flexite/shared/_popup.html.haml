@@ -1,0 +1,16 @@
+.modal.fade#modal{ role: :dialog, aria: { hidden: 'true' } }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ type: :button, data: { dismiss: :modal }, aria: { label: 'Close' } }
+          %span{ aria: { hidden: 'true' } }
+            &times;
+        %h4.modal-title#modal-title
+      .modal-body#modal-body
+      .modal-footer
+        %button.btn.btn-secondary{ data: { dismiss: :modal } } Close
+:javascript
+  $flexite("#modal").on("hidden.bs.modal", function () {
+    $flexite("#modal #modal-title").text("");
+    $flexite("#modal-body").html("");
+  });

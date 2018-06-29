@@ -3,4 +3,5 @@ Flexite.configure do |c|
     app: ["#{Rails.root}/config/application.yml"]
   }
   c.app_name = 'Dummy'
+  c.migration_token = 'test'
 end

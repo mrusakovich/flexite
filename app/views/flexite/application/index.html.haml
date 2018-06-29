@@ -4,6 +4,7 @@
     %button#edit-node-btn.btn.btn-success Edit node
     %button#delete-node-btn.btn.btn-danger Delete
     = link_to 'Reload cache', reload_configs_path, remote: true, class: 'btn btn-info'
+    = link_to 'Show diff', diff_path, remote: true, class: 'btn btn-warning'
     = back_to_app
 .row#tree-container
   .col-md-4

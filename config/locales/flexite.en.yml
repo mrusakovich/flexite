@@ -1,0 +1,16 @@
+en:
+  models:
+    arr_entry: 'array'
+    sym_entry: 'symbol'
+    str_entry: 'string'
+    int_entry: 'integer'
+    bool_entry: 'boolean'
+  css:
+    ~-diff: 'change-diff'
+    --diff: 'deletion-diff'
+    +-diff: 'addition-diff'
+  labels:
+    buttons:
+      ~-diff: 'Changes'
+      --diff: 'Deletions'
+      +-diff: 'Additions'

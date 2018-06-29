@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180618115057) do
+ActiveRecord::Schema.define(:version => 20180629110934) do
 
   create_table "flexite_configs", :force => true do |t|
     t.string   "name"
-    t.integer  "created_by"
-    t.boolean  "selectable", :default => true
+    t.boolean  "selectable",  :default => true
     t.integer  "config_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "description"
   end
 
   add_index "flexite_configs", ["config_id"], :name => "index_flexite_configs_on_config_id"
