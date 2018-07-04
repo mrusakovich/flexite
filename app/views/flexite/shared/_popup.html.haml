@@ -8,6 +8,7 @@
         %h4.modal-title#modal-title
       .modal-body#modal-body
       .modal-footer
+        %span#submit-btn
         %button.btn.btn-secondary{ data: { dismiss: :modal } } Close
 :javascript
   $flexite("#modal").on("hidden.bs.modal", function () {

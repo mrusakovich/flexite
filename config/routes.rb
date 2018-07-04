@@ -20,7 +20,9 @@ Flexite::Engine.routes.draw do
 
   resource :diff, only: [:show] do
     post :check
-    put :apply
+    post :apply
+    post :save_diff
+    get :push
   end
 
   root to: 'application#index'

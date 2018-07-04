@@ -23,7 +23,8 @@ module Flexite
     def t_node
       {
         'value' => self[:value],
-        'type' => I18n.t("models.#{self.class.name.demodulize.underscore}")
+        'type' => I18n.t("models.#{self.class.name.demodulize.underscore}"),
+        'class' => self.class.name
       }
     end
 

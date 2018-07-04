@@ -65,7 +65,8 @@ module Flexite
     def t_node
       node = {
         'name' => name,
-        'description' => description
+        'description' => description,
+        'class' => self.class.name
       }
 
       if configs.any?
@@ -77,10 +78,6 @@ module Flexite
       end
 
       node
-    end
-
-    def t_entry_index(entry)
-      "#{entry.class.name.demodulize.underscore}-0"
     end
 
     private

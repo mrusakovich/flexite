@@ -15,6 +15,11 @@
     position: fixed;
 }
 
+.pos-fixed .flex *:not(:first-child ) {
+    margin-left: 5px;
+    width: initial;
+}
+
 [id^='section'] {
     height: 800px;
     overflow-y: auto;

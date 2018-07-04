@@ -13,10 +13,12 @@ module Flexite
         arr_entry_destroy: 'Entry::DestroyService',
         destroy_array_entry: 'Entry::DestroyArrayEntryService',
         update_config: 'Config::UpdateService',
-        check_diff: 'Diff::CheckService',
-        show_diff: 'Diff::ShowService',
-        apply_to_diff: 'Diff::ApplyService',
-        apply_from_diff: 'Diff::ApplyService'
+        sync_check_diff: 'Diff::SyncCheckService',
+        async_check_diff: 'Diff::AsyncCheckService',
+        sync_show_diff: 'Diff::SyncShowService',
+        async_show_diff: 'Diff::AsyncShowService',
+        apply_diff: 'Diff::ApplyService',
+        push_diff: 'Diff::PushService'
       }
     end
   end

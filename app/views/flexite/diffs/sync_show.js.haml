@@ -1,0 +1,8 @@
+- if @data.present?
+  $flexite("#modal-body").html("#{j render 'diff'}");
+  $flexite("#submit-btn").html("#{j link_to 'Push', push_diff_path(stage: @stage, url: @url), remote: true, class: 'btn btn-success' }");
+- else
+  $flexite("#modal-body").html("There is no difference between stages");
+  $flexite("#submit-btn").html("");
+
+$flexite("#modal").modal("show");

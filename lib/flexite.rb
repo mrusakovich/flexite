@@ -1,6 +1,7 @@
 require 'flexite/engine'
 require 'hashie'
 require 'hashdiff'
+require 'net/http'
 
 module Flexite
   extend ActiveSupport::Autoload
