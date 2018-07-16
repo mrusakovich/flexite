@@ -2,7 +2,7 @@ module Flexite
   class Diff
     class Token
       def initialize(string_token)
-        @token = string_token
+        @token = string_token.encode(Encoding::UTF_8)
       end
 
       def valid?

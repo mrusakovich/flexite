@@ -10,6 +10,7 @@ module Flexite
     end
 
     def stage_select
+      Rails.logger.debug { Flexite.config.stages }
       select_tag :stage, options_for_select(Flexite.config.stages), class: 'form-control'
     end
   end

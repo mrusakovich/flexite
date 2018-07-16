@@ -6,7 +6,7 @@ module Flexite
 
     def index
       @configs = Config.tree_view(params[:config_id])
-      @cache_key = "#{controller_name}/#{action_name}.#{request.format.symbol}/parent_id/#{params.fetch(:config_id, :root)}"
+      @cache_key = "#{controller_name}/#{action_name}.#{request.format.symbol}/#{Config.roots.maximum(:updated_at)&.to_s(:number)}"
     end
 
     def new
