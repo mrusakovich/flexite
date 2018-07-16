@@ -119,7 +119,7 @@ module Flexite
         case object
           when Config
             object.config
-          when ArrEntry
+          when Entry
             object.parent
         end
       end
