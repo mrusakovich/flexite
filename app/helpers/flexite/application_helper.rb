@@ -12,11 +12,11 @@ module Flexite
     def stage_select
       Rails.logger.debug { Flexite.config.stages }
       flexite_config = File.join(Rails.root, 'config', 'flexite.yml')
-      Rails.debug("CONFIG EXIST?: #{File.exist?(flexite_config)}")
+      Rails.logger.debug("CONFIG EXIST?: #{File.exist?(flexite_config)}")
 
       if File.exist?(flexite_config)
         stage_config = YAML.load_file(flexite_config)
-        Rails.debug { stage_config }
+        Rails.logger.debug { stage_config }
       end
 
       select_tag :stage, options_for_select(Flexite.config.stages), class: 'form-control'
