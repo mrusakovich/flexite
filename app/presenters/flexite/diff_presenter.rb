@@ -16,7 +16,7 @@ module Flexite
     def prettified
       case @type.to_sym
         when :-, :+
-          JSON.pretty_generate(@changes.first)
+          JSON.pretty_generate(@changes.first) rescue @changes.first
         else
           @changes
       end

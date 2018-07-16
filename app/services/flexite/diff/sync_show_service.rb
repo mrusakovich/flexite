@@ -25,8 +25,8 @@ module Flexite
       protected
 
       def expire_old
-        Flexite.cache.delete_matched(/-#{@stage}-show-diff/)
-        Flexite.cache.delete_matched(/-#{@stage}-diff-checksum/)
+        Flexite.cache.delete_matched(Flexite.match_key("-#{@stage}-show-diff"))
+        Flexite.cache.delete_matched(Flexite.match_key("-#{@stage}-diff-checksum"))
       end
 
       def result(response)

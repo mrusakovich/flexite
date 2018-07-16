@@ -36,6 +36,10 @@ module Flexite
       Digest::MD5.hexdigest("#{Config.maximum(:updated_at)}#{Entry.maximum(:updated_at)}#{Config.count}#{Entry.count}")
     end
 
+    def match_key(pattern)
+      @@config.cache_matcher.call(pattern)
+    end
+
     def cached_nodes
       return unless Config.table_exists?
 

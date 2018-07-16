@@ -15,7 +15,7 @@ module Flexite
         diffs = Flexite.cache.read("#{Flexite.state_digest}-#{@checksum}-#{@stage}-diffs")
 
         if diffs.blank?
-          Flexite.cache.delete_matched(/-#{@stage}-hashdiffs/)
+          Flexite.cache.delete_matched(Flexite.match_key("-#{@stage}-hashdiffs"))
           return { error: 'Difference is inconsistent', code: 400 }
         end
 

@@ -9,8 +9,8 @@ module Flexite
 
       def call
         checksum = Flexite.cache.read("#{@state_digest}-#{@stage}-diff-checksum")
-        Flexite.cache.delete_matched(/-#{@stage}-diff-checksum/)
-        Flexite.cache.delete_matched(/-#{@stage}-show-diff/)
+        Flexite.cache.delete_matched(Flexite.match_key("-#{@stage}-diff-checksum"))
+        Flexite.cache.delete_matched(Flexite.match_key("-#{@stage}-show-diff"))
 
 
         if checksum.blank?
