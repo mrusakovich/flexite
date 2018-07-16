@@ -17,7 +17,7 @@ module Flexite
           return ActionService::Result.new(flash: { type: :warning, message: 'Settings were changed and difference should be revalidated' })
         end
 
-        response = @remote_diff.apply({ stage: Flexite.config.stagename, checksum: checksum })
+        response = @remote_diff.apply({ token: Flexite.config.migration_token, stage: Flexite.config.stagename, checksum: checksum })
 
         if response[:error].blank?
           ActionService::Result.new(flash: { type: :success, message: response[:message] })

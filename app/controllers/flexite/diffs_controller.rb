@@ -8,7 +8,7 @@ module Flexite
     end
 
     def apply
-      render json: ServiceFactory.instance.get(:apply_diff, params[:stage], params[:checksum]).call
+      render json: ServiceFactory.instance.get(:apply_diff, params[:token], params[:stage], params[:checksum]).call
     end
 
     def push

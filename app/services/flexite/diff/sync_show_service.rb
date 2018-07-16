@@ -12,10 +12,10 @@ module Flexite
 
         if response.nil?
           expire_old
-          nodes = Config.t_nodes.to_json
-          checksum = Digest::MD5.hexdigest(nodes)
+          nodes = Config.t_nodes
+          checksum = Digest::MD5.hexdigest(nodes.to_json)
           Flexite.cache.write("#{@state_digest}-#{@stage}-diff-checksum", checksum)
-          response = @remote_diff.check({ token: Flexite.config.migration_token, tree: JSON.parse(nodes), stage: Flexite.config.stagename, checksum: checksum })
+          response = @remote_diff.check({ token: Flexite.config.migration_token, tree: nodes, stage: Flexite.config.stagename, checksum: checksum })
           Flexite.cache.write("#{@state_digest}-#{@stage}-show-diff", response)
         end
 
@@ -31,6 +31,7 @@ module Flexite
 
       def result(response)
         if response[:error].present?
+          expire_old
           ActionService::Result.new(success: false, flash: { type: :danger, message: response[:error] }, endpoint: { partial: 'flexite/shared/show_flash' })
         else
           ActionService::Result.new(data: response[:diffs], endpoint: { action: :sync_show })

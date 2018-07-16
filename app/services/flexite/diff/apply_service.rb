@@ -1,12 +1,17 @@
 module Flexite
   class Diff
     class ApplyService
-      def initialize(stage, checksum)
+      def initialize(token, stage, checksum)
         @stage = stage
+        @token = Token.new(token)
         @checksum = checksum
       end
 
       def call
+        if @token.invalid?
+          return { error: 'Invalid token', code: 401 }
+        end
+
         diffs = Flexite.cache.read("#{Flexite.state_digest}-#{@checksum}-#{@stage}-diffs")
 
         if diffs.blank?
