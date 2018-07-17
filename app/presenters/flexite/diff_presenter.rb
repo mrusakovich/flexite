@@ -1,6 +1,6 @@
 module Flexite
   class DiffPresenter < SimpleDelegator
-    def initialize(template, type, depth, _, *changes)
+    def initialize(template, type, depth, *changes)
       @type = type
       @depth = depth
       @changes = changes

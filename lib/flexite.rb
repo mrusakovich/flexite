@@ -28,7 +28,7 @@ module Flexite
     end
 
     def reload_root_cache
-      cache.delete(@@config.root_cache_key)
+      cache.clear
       cached_nodes
     end
 

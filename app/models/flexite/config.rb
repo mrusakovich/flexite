@@ -7,12 +7,14 @@ module Flexite
 
     delegate :value, to: :entry, allow_nil: true
     belongs_to :config, touch: true
+    alias :parent :config
+    alias :parent= :config=
     has_one :entry, as: :parent, dependent: :destroy
     has_many :configs, dependent: :destroy
     has_many :histories, as: :entity, dependent: :destroy
     scope :not_selectable, -> { select([:id, :name]).where(selectable: false) }
     scope :roots, -> { where(config_id: nil) }
-    validates :name, uniqueness: { scope: :config_id }
+    scope :order_by_name, -> { order("UPPER(#{table_name}.name)") }
     before_create :set_description
 
     def tv_node
@@ -40,6 +42,7 @@ module Flexite
                  "COUNT(configs_#{table_name}.id) AS nodes_count",
                  "#{Entry.table_name}.id AS entry_id"])
         .where(config_id: parent_id).group("#{table_name}.id")
+        .order_by_name
     end
 
     def nodes_count
@@ -59,7 +62,7 @@ module Flexite
     end
 
     def self.t_nodes
-      roots.includes(:configs, :entry).map(&:t_node)
+      roots.includes(:configs, :entry).order_by_name.map(&:t_node)
     end
 
     def t_node
@@ -70,7 +73,7 @@ module Flexite
       }
 
       if configs.any?
-        node.merge!('configs' => configs.includes(:configs, :entry).map(&:t_node))
+        node.merge!('configs' => configs.includes(:configs, :entry).order_by_name.map(&:t_node))
       end
 
       if entry.present?
@@ -78,6 +81,14 @@ module Flexite
       end
 
       node
+    end
+
+    def dig(level)
+      if level.to_sym == :configs
+        return send(level).order_by_name
+      end
+
+      send(level)
     end
 
     private

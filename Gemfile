@@ -15,6 +15,7 @@ gem "jquery-rails"
 group :test, :development do
   gem 'test-unit'
   gem 'pry-byebug'
+  gem 'thin'
 end
 # To use debugger
 # gem 'debugger'

@@ -7,11 +7,6 @@ module Flexite
         @token = Token.new(token)
         @stage = stage
         @checksum = checksum
-        @diffs = {
-          '+': [],
-          '-': [],
-          '~': []
-        }
       end
 
       def call
@@ -24,45 +19,42 @@ module Flexite
         if @token.invalid?
           return { error: 'Invalid token', code: 401 }
         end
-        diff = HashDiff.diff(@current_tree, @other_tree, array_path: true, use_lcs: false)
 
-        if diff.blank?
+        diffs = HashDiff.diff(@current_tree, @other_tree, array_path: true)
+
+        if diffs.blank?
           return {}
         end
 
-        diff.each do |type, depth, *change|
-          @diffs[type.to_sym] << [get_depth(type, depth), depth, *change]
+        view_diffs = { '+': [], '-': [], '~': [] }
+        @patched = HashDiff.patch!(@current_tree, diffs)
+
+        diffs.each do |type, depth, *changes|
+          view_diffs[type.to_sym] << [get_depth(type.to_sym == :- ? depth.slice(0..-2) : depth), *changes]
         end
 
-        Flexite.cache.write("#{Flexite.state_digest}-#{@checksum}-#{@stage}-diffs", @diffs)
-        { diffs: @diffs }
+        Flexite.cache.write("#{Flexite.state_digest}-#{@checksum}-#{@stage}-diffs", diffs)
+        { diffs: view_diffs }
       rescue => exc
         { error: exc.message, code: 500 }
       end
 
       private
 
-      def get_depth(type, depth)
-        tree = get_tree(type)
-        view_depth = depth.size.times.with_object([]) do |i, memo|
-          sliced_depth = depth.slice(0..depth.size - 1 - i)
+      def get_depth(depth)
+        node = @patched
 
-          case (next_node = tree.dig(*sliced_depth))
+        view_depth = depth.each.with_object([]) do |level, memo|
+          node = node[level]
+
+          case node
             when ::Hash
-              memo << (next_node['name'] || next_node['type'])
+              next if node['name'].blank?
+              memo << node['name']
           end
         end
 
-        view_depth.reverse.join(Flexite.config.diff_depth_separator)
-      end
-
-      def get_tree(type)
-        case type.to_sym
-          when :-
-            @current_tree
-          else
-            @other_tree
-        end
+        view_depth.join(Flexite.config.diff_depth_separator)
       end
     end
   end

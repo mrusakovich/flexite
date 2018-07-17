@@ -1,5 +1,7 @@
 .row
   - flash.each do |type, value|
-    .col-md-8.alert{ class: "alert-#{type}", role: :alert }
+    .col-md-8.alert.alert-dismissible{ class: "alert-#{type} ", role: :alert }
+      %a{ href: '#', class: 'close', data: { dismiss: 'alert' }, aria: { label: 'close' } }
+        &times;
       %strong
         = value

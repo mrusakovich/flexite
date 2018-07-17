@@ -19,7 +19,7 @@ module Flexite
       req = Net::HTTP::Post.new(uri, headers)
       req.body = data.to_json
 
-      response = Net::HTTP.start(uri.host, uri.port, use_ssl: ssl?(uri)) do |http|
+      response = Net::HTTP.start(uri.host, uri.port, use_ssl: ssl?(uri), read_timeout: 120) do |http|
         http.request(req)
       end
       # TODO: add check/validation of response status and etc....

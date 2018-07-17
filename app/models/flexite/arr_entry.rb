@@ -26,10 +26,18 @@ module Flexite
       node = super.except('value')
 
       if entries.any?
-        node.merge!('entries' => entries.map(&:t_node))
+        node.merge!('entries' => entries.order_by_value.map(&:t_node))
       end
 
       node
+    end
+
+    def dig(level)
+      if level.to_sym == :entries
+        return send(level).order_by_value
+      end
+
+      super
     end
 
     private
