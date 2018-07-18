@@ -20,7 +20,7 @@ module Flexite
           return { error: 'Invalid token', code: 401 }
         end
 
-        diffs = HashDiff.diff(@current_tree, @other_tree, array_path: true)
+        diffs = HashDiff.diff(@current_tree, @other_tree, array_path: true, use_lcs: false)
 
         if diffs.blank?
           return {}

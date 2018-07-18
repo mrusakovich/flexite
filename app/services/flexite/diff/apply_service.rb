@@ -27,6 +27,7 @@ module Flexite
           end
         end
 
+        Flexite.reload_root_cache
         { message: 'Difference was applied', code: 200 }
       rescue => exc
         { error: exc.message, code: 500 }
