@@ -1,2 +1,604 @@
 defaults: &default
-# some data here
+
+  client: corevist
+  time_zone: EST #only for translation
+  RFC_version: '3'
+  announce_system_maintenance: 10    # number of days in advance
+  system_maintenance_warning: 15     # number of minutes in advance
+  languages: [ en_US, de_DE, es_ES, fr_CA, fr_FR, nl_BE, nl_NL, sv_SE, zh_CN ]
+  microsites: [ b2b_microsite1 ] #Setting up a new microsite?  Follow the steps: https://b2b2dot0.centraldesktop.com/development/doc/5640912
+  microsite_languages:
+    # first listed language is used for communications with the microsite
+    b2b_microsite1: [ en_US, de_DE, es_ES, fr_CA, fr_FR, nl_BE, nl_NL, sv_SE, zh_CN ]
+  login_url:    # E9
+    b2b_microsite1: [ https://core.b2b2dot0.biz, :b2b_app ] # QA, :b2b_app or :catalog
+    # TODO create landing page where user can select the microsite for logging in  # E9
+    '': [ https://core.b2b2dot0.biz, :b2b_app ]  # in case microsite is not determined yet
+
+  # sap connection
+  rfc_ashost: "/H/saprouter.1stbasis.com/H/172.20.3.2"
+  rfc_sysnr: "00"
+  rfc_client: "300"
+  rfc_user: "core_cpic"
+  rfc_passwd: "b2b4you"
+  rfc_lang: EN
+  rfc_trace: 0
+  rfc_loglevel: WARN
+
+  new_features:
+    # :order_change: true
+
+  suppress_browser_update: false
+  duplicate_return_code: "011"
+
+  surveys:
+    b2b_microsite1:
+      :activated: true
+      # should always have some date specified
+      :show_survey_on_home_page_until: 12/31/2099
+      :show_survey_on_help_page: true
+      en_US:
+        # site survey URL - if a url appears here it is eligible to be displayed on the home page (if date is OK) and the help page (if flag is set)
+        :survey_url: http://www.surveymonkey.com/s.aspx?sm=2yQpkHt3mGN4O5euWZ975w_3d_3d
+        :survey_results_url: http://www.surveymonkey.com/sr.aspx?sm=USLtBmy5BZSEQ9L59cVTlabNSQjIL5E_2fq9sVejV36ic_3d
+      de_DE:
+        # site survey URL - if a url appears here it is eligible to be displayed on the home page (if date is OK) and the help page (if flag is set)
+        :survey_url: http://www.surveymonkey.com/s.aspx?sm=2yQpkHt3mGN4O5euWZ975w_3d_3d
+        :survey_results_url: http://www.surveymonkey.com/sr.aspx?sm=USLtBmy5BZSEQ9L59cVTlabNSQjIL5E_2fq9sVejV36ic_3d
+
+  # The URL to this app
+  catalog_redirect: /sap/redirect/b2bref/?ref=
+  catalog_log_out: false  # sap/redirect/endsession   #typical URL for magento plugin
+  add_to_cart_url: cart/add_to_cart
+  return_to_cart_url: cart/shop
+
+  #E41 new Magento add to cart behavior to store the user_is as the key to the soap_cart table
+  user_id_is_key_to_soap_cart: true
+  auto_save_shopping_cart_after_loading_from_soap_cart: true
+  load_from_soap_cart: false
+
+  # Product image URLs (no catalog) - the product number will be added to generate the exact URL. If set to false the column will not show up in the cart. For customers we need a URL like http://evergreen_inc.com/images/products/
+  product_image_url: false
+
+  # Product Detail Page URLs (Magento catalog in play)
+  product_detail_page_url: false
+  product_thumbnail_image_url: false
+
+  # microsite-independent address (because user is not known)
+  helpdesk_email: app.admin@b2b2dot0.com
+
+  # smtp settings
+  use_customer_smtp_server: true  #true/false if false, send emails via 1and1
+  smtp:
+   :address: smtp.1and1.com
+   :port: 25
+   :domain: b2b2dot0.biz
+   :authentication: :login
+   :user_name: app.admin@b2b2dot0.biz
+   support_email: support@corevist.com
+   :password: b2b2d0t04y0u
+
+  #gmail smtp settings
+  # smtp:
+  #  :address: smtp.gmail.com
+  #  :port: 25
+  #  :domain: www.google.com
+  #  :authentication: :login
+  #  :enable_starttls_auto: true
+  #  :user_name: support@b2b2dot0.com
+  #  :password: b2b4you!
+
+  raw_data_messages: {}  # either empty hash or as below
+#   :cart: [ adrian.zehnder@b2b2dot0.com ]
+#   :cart_all_messages: true
+#   :payment: [ adrian.zehnder@b2b2dot0.com, ray.mannion@b2b2dot0.com ]
+#   :payment_all_messages: true   # otherwise only generic messages
+
+  us_states:
+    - [ AL, Alabama ]
+    - [ AK, Alaska ]
+    - [ AZ, Arizona ]
+    - [ AR, Arkansas ]
+    - [ CA, California ]
+    - [ CO, Colorado ]
+    - [ CT, Connecticut ]
+    - [ DE, Delaware ]
+    - [ DC, District of Columbia ]
+    - [ FL, Florida ]
+    - [ GA, Georgia ]
+    - [ HI, Hawaii ]
+    - [ ID, Idaho ]
+    - [ IL, Illinois ]
+    - [ IN, Indiana ]
+    - [ IA, Iowa ]
+    - [ KS, Kansas ]
+    - [ KY, Kentucky ]
+    - [ LA, Louisiana ]
+    - [ ME, Maine ]
+    - [ MD, Maryland ]
+    - [ MA, Massachusetts ]
+    - [ MI, Michigan ]
+    - [ MN, Minnesota ]
+    - [ MS, Mississippi ]
+    - [ MO, Missouri ]
+    - [ MT, Montana ]
+    - [ NE, Nebraska ]
+    - [ NV, Nevada ]
+    - [ NH, New Hampshire ]
+    - [ NJ, New Jersey ]
+    - [ NM, New Mexico ]
+    - [ NY, New York ]
+    - [ NC, North Carolina ]
+    - [ ND, North Dakota ]
+    - [ OH, Ohio ]
+    - [ OK, Oklahoma ]
+    - [ OR, Oregon ]
+    - [ PA, Pennsylvania ]
+    - [ RI, Rhode Island ]
+    - [ SC, South Carolina ]
+    - [ SD, South Dakota ]
+    - [ TN, Tennessee ]
+    - [ TX, Texas ]
+    - [ UT, Utah ]
+    - [ VT, Vermont ]
+    - [ VA, Virginia ]
+    - [ WA, Washington ]
+    - [ WV, West Virginia ]
+    - [ WI, Wisconsin ]
+    - [ WY, Wyoming ]
+
+  # Roles
+  roles_assigned_to_microsites: false
+  # privileges
+  general_privileges:
+    - :suppress_pricing
+    - :pilot_feature
+    - :cart_short_cut
+    - :order_requestor
+    - :customer_master_maintenance
+    - :upload_users
+  sales_area_privileges:
+    - :place_holder   # here nothing is really required by the app
+  salesdoc_type_privileges:
+    - :create_doc
+    - :change_doc
+    - :change_pricing  # these are required by the app
+  # it makes sense to display less, if some of them are not supposed to show up at all
+  display_categories:
+    - C # std.orders
+    - I # del.free of charge, ( K: credit memo request, L: debit memo request: probably never)
+    - H # returns
+    - M # invoice
+    - O # credit memo
+    - P # debit memo
+    - U # pro forma invoice (N: invoice cancellation, S: credit memo cancellation: doesn't make sense)
+    - B # quote
+    - A # RfQ
+  customer_admins_maintain_SP_or_SH: true
+  employee_admins_can_create_admins:
+    b2b_microsite1: true
+
+  # Sales Areas
+  sales_areas: [ '30001000', '30001200', '30001400',
+                 '10001000' ]
+  inactive_sales_areas: []
+  # Role sales areas have to list every sales area which has to be displayed in roles
+  # Currently only masking at the sales org level is supported (has to end with xxxx)
+  # role_sales_areas: [ '80000112', '80000114', '80000131', '99000131', '86000131', '8500xxxx', '8600xxxx', '9500xxxx', '9900xxxx' ]
+
+  # Sales rep
+  territories:
+    b2b_microsite1:
+      - [ 'US blue chips, North West', W01 ]
+      - [ 'US blue chips, South West', W02 ]
+      - [ 'US SME, West', W03 ]
+      - [ 'US blue chips, North East', E01 ]
+      - [ 'US blue chips, South East', E02 ]
+      - [ 'US SME, East', E01 ]
+      - [ 'Europe blue chips', EU1 ]
+      - [ 'Europe SME', EU2 ]
+
+  company_codes:
+    :all: [ '3000', '1000' ]
+    # from table TVKO: sales org is assigned to company code
+    '3000': '3000'
+    '1000': '1000'
+  use_currency_symbols:   #by microsite E11
+    b2b_microsite1: true
+
+#    http://www.xe.com/symbols.php
+  currency_symbols:
+    USD: $
+    EUR: €
+    GBP: £
+    CAD: C$
+  # General app
+  qty_with_dec: false
+  assign_ship_tos: true  # by assigning ship-tos you also activate sales doc entry by ship-to
+  partners_with_street_address: [ WE ]
+  # other partner functions used and where they are stored in SAP (so overlapping numbers in the partner cache can be avoided)
+  partner_functions:
+    RE: :customer
+    LF: :vendor
+    SP: :vendor
+  add_to_cart_quantity: 1000       # means 1
+  document_cache_size: 20  # if the customer has huge documents (>500 items), this should be looked at
+  b2c_catalogs: true     # true/false
+
+  sap_monitor:
+    :number_of_failures: 3   # consecutive failures
+    :number_of_successes: 2  # consecutive successes
+    :downtime: 30            # minutes
+    :extend_downtime: 10     # minutes before it runs out
+    :email_recipients: [ errors@corevist.com ]
+    :haproxy: localhost:8100 # address/host of haproxy
+    :max_time: 50            # time out for haproxy call in seconds
+
+  mongrel_monitor:
+    :number_of_failures: 4   # consecutive failures
+
+  # Login related
+#  # at least 6 chars, at least 1 digit, one character
+#  password_strength_regexp: '((?=.*\d)(?=.*[a-zA-Z]).{6,})'
+  # at least 6 chars, at least 1 digit, at least 1 non-digit (so it'll also work for non-Western alphabets)
+  password_strength_regexp: '((?=.*\d)(?=.*[\D]).{6,})'
+#  # at least 6 chars, at least 1 digit, at least 1 non-digit, no spaces
+#  password_strength_regexp: '((?=.*\d)(?!.*\s)(?=.*[\D]).{6,})'  default_password: b2b4you    # mainly for tests, but also for rake job creating users
+  default_password: b2b4you    # mainly for tests, but also for rake job creating users
+  activate_forgotten_password: true
+  activate_registration: true
+  use_greeter: false                            # whether or not popup it displayed for first time user logins
+  no_reuse_of_x_passwords: false                # number of historic passwords or false
+  forced_password_change_after_x_days: false    # number of days or false
+  lock_out_after_x_failed_logins: 5             # number or false
+  send_lock_out_notification: true              # true or false
+  db_user_phone_number_required: false          # true or false NOTE: before setting a client's project to true, you need to ensure that all existing users have a phone number entered in the DB or "ALL" logins will fail!
+  db_user_id_cannot_equal_password: true        # true or false  #E22
+  login_via_cookie: false  # true/false or number of days
+
+  # Summary
+  # to turn it off, set all type_of_xxx to N
+  type_of_salesdocs: U     # U=recently placed orders of user, P=recently placed orders of partner (sold-to, ship-to), N=no sales docs
+  number_of_salesdocs: 5   # number, A=all
+  empl_type_of_salesdocs: U  # employees: currently only U, N
+  empl_number_of_salesdocs: 5
+  type_of_deliveries: R    # R=recent deliveries of sold-to/ship-to, N=no deliveries
+  number_of_deliveries: 10 # for R: since x days
+  type_of_invoices: O      # O=overdue, D=due, N=no invoices
+  number_of_invoices: A    # number, A=all
+
+  # Home page
+  keep_news_closed: true
+  approval_functionality:
+    b2b_microsite1: false #true
+
+  # thin cart
+  thin_cart:
+    :atp_check: true
+    :price_check: true
+    :doc_type: TA
+    :based_on: :sold_to                      # :sold_to / :ship_to
+    :atp_date: :material_availability_date   # :material_availability_date, :ship_date, :delivery_date
+    :add_to_cart: true
+    :pricing_rule: V     # E31
+
+  place_order:
+    by_proxy_login: false #Z5380
+  admin:
+    #temp solution
+    sub_menus: [:user_maintenance, :role_maintenance, :proxy_login, :monitoring, :content_maintenance, :sap_maintenance] #Z5513
+
+
+  # Sales Document Search
+  salesdoc_search_options: [ Last_7d, Last_30d, Last_90d ]
+  salesdocs_max_results: 12000
+  salesdocs_max_display: 100
+  salesdocs_max_display_options: [ 50, 100, 200, 300, 400, 500 ] #ZD6483
+  salesdoc_search_by:
+    :sold_to: true
+    :ship_to: true
+    :material: true
+    :po: true
+    :delivery: true
+    :invoice: true
+    :order: true
+    :eta: true
+    :backorders: true
+    :openorders: true
+    :advanced: false
+  # Default must be enabled in the list above
+  salesdoc_search_by_default: :po
+  backorders:
+    :since: 360  # how far back to search for backorders
+    :cut_off: 1  # today + x: order with RDD older than cut off is considered a backorder
+  salesdocs_by_eta:
+    :max_results: 300
+    :orders_since: 365      # how many days before today
+    :deliveries_since: 10   # how many days before today
+  display_reference_document: false  # displays e.g. the quote number. Only makes sense if create with reference to something is active
+
+  # Sales Document Display
+  carriers:    # lists the SAP numbers of carriers and links them to a tracking URL
+    '123456': Fedex
+    '7118794': UPS
+  tracking_URLs:
+    Fedex: http://www.fedex.com/Tracking?action=track&tracknumbers=TrackingNumber
+    UPS: http://wwwapps.ups.com/etracking/tracking.cgi?TypeOfInquiryNumber=T&InquiryNumber1=TrackingNumber
+    UPSltl: 'http://ltl.upsfreight.com/shipping/tracking/trackResults.aspx?track=PTrackingNumber,'    # needs to be enclosed in quotes because the comma at the end was causing a unterminated string error in the HTML generated by link_to_function
+    Conway: https://www.con-way.com/webapp/manifestrpts_p_app/Tracking/TrackingRS.jsp?PRO=TrackingNumber
+    YellowFreight: http://my.yrc.com/dynamic/national/servlet?CONTROLLER=com.rdwy.ec.rextracking.http.controller.ProcessPublicTrackingController&PRONumber=TrackingNumber
+    EstesExpress: http://www.estes-express.com/cgi-dta/edn419.mbr/output?search_criteria=TrackingNumber
+    JPExpress: http://www.myjpexpress.com/freightbill.aspx?number=TrackingNumber
+# SCAC codes - industry standard:
+# Might try here: http://www.track-trace.com/bol
+# Or, here: http://www.nmfta.org/pages/scac
+    DAFG: https://www.daytonfreight.com/Tracking/TrackingDetail.aspx?proNum=TrackingNumber
+    FDEG: http://www.fedex.com/Tracking?action=track&tracknumbers=TrackingNumber
+    CWCE: https://www.con-way.com/webapp/manifestrpts_p_app/Tracking/TrackingRS.jsp?PRO=TrackingNumber
+    EXLA: http://www.estes-express.com/cgi-dta/edn419.mbr/output?search_criteria=TrackingNumber
+    FEDX: http://www.fedex.com/Tracking?action=track&tracknumbers=TrackingNumber
+    HMES: http://www.expresstracking.org/holland/holland-tracking-result/?no=TrackingNumber
+    JPXS: http://www.myjpexpress.com/freightbill.aspx?number=TrackingNumber
+    LMEL: http://www.lme4me.com/webapp/Shipping/ShippingStatusURL?stype=PRO&snum=TrackingNumber
+    RBTN: http://www.expresstracking.org/chrobinson/c-h-robinson-tracking-result/?no=TrackingNumber
+    ODFL: http://www.expresstracking.org/old-dominion/old-dominion-tracking-result/?no=TrackingNumber
+    PITD: http://works.pittohio.com/mypittohio/sv_ground/OT_ShipmentTraceDetails.asp?pro=TrackingNumber
+#    RL_CARRIERS: http://www.expresstracking.org/rlcarriers/rl-carriers-tracking-result/?no=TrackingNumber
+    #RL_CARRIERS: http://www.rlcarriers.com/shiptrace.asp?traceseek=PRO&TRACENUM=TrackingNumber
+    SAIA: http://www.saia.com/Tracing/AjaxProstatusByPro.aspx?m=2&UID=&PWD=&PRONum1=TrackingNumber
+    UPSI: http://wwwapps.ups.com/etracking/tracking.cgi?TypeOfInquiryNumber=T&InquiryNumber1=TrackingNumber
+    UPS_FREIGHT: 'http://ltl.upsfreight.com/shipping/tracking/trackResults.aspx?track=PTrackingNumber,'    # needs to be enclosed in quotes because the comma at the end was causing a
+
+  output_types:
+    #        method        based on   link used in Google Analytics, special method (spool, pdf, idoc, state), printer_id (#requires SAP transport EH6K900170 or higher)
+    ZB10: [ :generate_pdf, :salesdoc, :order_confirmation, :otf, :LP01 ]
+    ZB11: [ :generate_pdf, :invoice, :invoice, :otf ]
+    QU00: [ :generate_pdf, :salesdoc, :quote ]
+    BA00: [ :generate_pdf, :salesdoc, :order_confirmation, :pdf, :LP01 ]
+    PL00: [ :generate_pdf, :delivery, :packing_list, :spool ]
+    LD00: [ :generate_pdf, :delivery, :bill_of_lading, :spool ]
+    RD00: [ :generate_pdf, :invoice, :invoice,  :pdf, :LP01 ]
+    ZPRO: [ :generate_pdf, :order_based_proforma_invoice, :proforma_invoice, :spool ]  # E25
+    BOL: [ :client_specific, :shipment, :bol ]
+    SAP13: [ :generate_pdf, :statement, :statement, :state ] #E50
+    invoice: inv
+    order_confirmation: oc
+    packing_list: pl
+    bill_of_lading: bol
+    quote: qu
+
+  # Sales Document Creation
+  salesdoc_type_sequence: [ TA, KL ]
+  quote_type_sequence: [ AG ]
+  rfq_type_sequence: [ AF ]
+  return_type_sequence: [ RE ]  # E30
+  create_salesdoc_types: # if role_sales_areas: have to refer to them, otherwise to sales_areas
+    TA: [ '30001000', '10001000' ]
+    KL: [ '30001000', '10001000' ]
+    RE: [ '30001000', '10001000' ]  # E30
+#    AG: [ US01ST01, EU01ST01 ]
+#    AF: [ US01ST01, EU01ST01 ]
+#    AB: [ US01ST01 ]
+  inactive_salesdoc_types: {}
+  #  KL: [ EU01SA01 ]         # so the functions and partners can already be prepared
+  min_qty: 1
+  max_qty:
+    :default: 1000   #Can be by microsite RPM20150126
+  customer_materials: true
+  simulate_after_return_from_catalog: false
+  ipc_active: false
+  # the default behavior is that a header RDD change overwrites ALL item RDDs:
+  # this flag only makes sense if all item RDDs are always equal to the header RDD (i.e. no entry of item RDDs)
+  suppress_header_rdd_change_pop_up: false
+  no_rdd_in_upload: false
+
+  # Customer Creation E4
+#  reference_sold_to: '70000010' # dev
+#  reference_ship_to: '80000000' # dev
+  reference_sold_to: '3251'  # QA
+  reference_ship_to: '3251'  # QA
+  with_tax_jurisdiction_codes: false   # true/false
+
+  sap_validation:
+    max_length:
+      po_number: 35
+
+  search_criteria:
+    max_length:
+      number: 10
+      postal_code: 10
+      city: 25
+      name: 35
+      material: 18
+      description: 40
+      po_number: 35
+      state: 3
+      phone: 14
+
+  # Material Search
+  materials_max_results: 100
+  material_search_requirements:  # {}   # for not activated yet
+    # [^\*]{3}: sequence of 3 non-wildcard characters anywhere
+    # ^[^\*]{3}: sequence of 3 non-wildcard characters at the beginning
+    material: '^[^\*]{3}'
+    description: '[^\*]{3}'
+  #E52: Search for materials using material determination
+  material_search_determination:
+    b2b_microsite1: false
+  #E27: allow search by customer material, by microsite
+  material_search_by_customer_material:
+    b2b_microsite1: true
+  prepopulate_material_search_materials:
+    b2b_microsite1: false
+
+  # Partner Search
+  partners_max_results: 100
+  partner_search_requirements:  # {}   # for not activated yet
+    number: '^[^\*]{3}'
+    name1: '[^\*]{3}'
+    city: '[^\*]{3}'
+    postal_code: '^[^\*]{3}'
+    phone_for_search: '[^\*]{3}'
+
+  # PO wildcard search requirements for order and invoice search by PO the validation code assumes that wildcards will not be allowed at the beginning
+  po_wildcard_search: false  # false if not used, '^[^\*]{4}' for min of 4 characters without a wildcard in the front
+
+  # Invoice Search
+  invoice_search_options: [ Last_7d, Last_30d, Last_90d ]
+  invoices_max_results: 12000
+  invoices_max_display: 100
+  invoices_max_display_options: [ 50, 100, 200, 300, 400, 500 ] #ZD6483
+  invoice_search_by:
+    :payer: true
+    :material: true
+    :po: true
+    :delivery: true
+    :invoice: true
+    :order: true
+    :advanced: false
+  # Default must be enabled in the list above
+  invoice_search_by_default: :payer
+
+  # Open items
+  due_totals_in_multiple_currencies: true   # true/false
+  due_in_days: 10  # display balance due in x days
+
+  # paymetric:
+  #   :tokenization: false
+  #   :xipay: false
+  #   # working DI configs from Blount QA
+  #   :di_guid: a519e565-469d-4cdd-a585-e8af0276353e
+  #   :di_key: 3Tc?Py*8-L6x9tE$+G7pg4!B2}DznX5_
+  #   :di_url: https://qaapp02.xisecurenet.com/DIeComm
+
+
+#E39	Bank of America Web AR
+#Maintain settings: https://demo.globalgatewaye4.firstdata.com/payment_pages/edit/65378  user b816
+#Note that locally, it expects port 3017 uness you specify a different "Payment page" which is the :x_login variable below
+  bank_of_america:
+    :url: "https://demo.globalgatewaye4.firstdata.com/payment"
+    :x_login: "WSP-B2B2D-A0@wcQA9lw"  #  Take from Payment Page ID in Payment Pages interface
+    :transaction_key: "AoJQ9BG5yERwism5W037" # Take from Payment Pages configuration interface
+
+  # Web AR
+  web_ar:
+    '3000':
+      :document_type: DZ
+      :echeck_action: LO  # O like Omega
+      :echecks: :by_payer_comp_code  # :by_user, false
+      :country: US
+      :type_of_account: X
+      :display_partials: true
+      :display_credits: true
+      :allow_partial_payments: false  # smallest amount (100) or false
+      :routing_number_length: 9
+      :suppress_sap_posting: false #true for biolabs
+      :payment_processor: :bofa    #:paymetric, :bofa
+      # :payment_method_options: [ 'invoice', 'credit card', 'echeck' ]
+
+  # Payments Search
+  payments_search_options: [ Last_7d, Last_30d, Last_90d ]
+
+
+#E50 Assign correspondences by company code
+  statements:
+    3000: SAP13
+
+  # Reporting
+  log_cart_short_cut: true  # other values: false
+  log_abandoned_cart: true  # other values: false, :email, :email_and_log
+
+  # Google Analytics
+  send_order_data: true
+  send_user_data: true
+  google_analytics_url: https://www.google.com/analytics/home
+
+  # RFCs used:
+  rfc_prefix: Z_B2B_
+  text_format_fieldname: 'FORMAT'
+  RFCs:
+    get_short_dump: READ_SHORT_DUMPS
+    get_partner: PARTNER_DATA
+    get_sales_partners: SALES_PARTNERS
+    sim_or_create: SALESDOC_CREATE
+    get_salesdoc: SALESDOC_DISPLAY
+    get_salesdoc_list: SALESDOC_LIST
+    load_assigned_partners: ASSIGNED_PARTNERS
+    material_search: MATERIAL_SEARCH
+    partner_search: PARTNER_SEARCH
+    generate_pdf: GET_PDF
+    get_summary: SUMMARY
+    get_invoice: INVOICE_DISPLAY
+    get_invoice_list: INVOICE_LIST
+    get_open_items: OPEN_ITEMS
+    pay_bill: PAY_BILL
+    get_payments: PAYMENTS
+    get_tax_jurisdiction_codes: GET_TXJCD
+    get_availability: MATERIALS_AVAILABILITY
+    change_order: SALESDOC_CHANGE
+    maintain_customer: MAINTAIN_CMD
+    get_customer_address: GET_CUSTOMER_ADDRESS
+    get_cross_sell_items: CROSS_SELL_ITEMS_GET
+    get_price_report: REPORT_SUBMIT
+    without_version: [ ]
+  preload_RFCs: [ :sim_or_create, :get_salesdoc, :get_invoice, :load_assigned_partners, :get_salesdoc_list ]
+  # which log level is used to log errors and infos (the environment-config log level determines whether it gets logged at that level or not)
+  RFC_error_log_level: :info
+  RFC_info_log_level: :info
+
+  # User Defaults
+  user_defaults:
+    b2b_microsite1:
+      user_type: customer
+      date_format: '%m/%d/%Y'
+      time_format: '%I:%M:%S %p'
+      number_format: '.,'
+      language: en_US
+
+  # Menu structure:
+  menu_tabs:
+   #    name,  controller, action
+   - [ :tab_home, :login, :home ]
+   - [ :tab_dashboard, :login, :home ]
+   - [ :tab_purchasing,  :purchasing, :determine_next_screen ]
+   - [ :tab_invoices, :invoicing, :determine_next_screen ]
+   - [ :tab_admin, :admin, :determine_next_screen ]
+   - [ :tab_profile, :profile, :determine_next_screen ]
+   - [ :tab_back_to_catalog, :login, :redirect_back_to_catalog ]
+   - [ :tab_help, :help, :show ]
+   - [ :tab_report_issue, :issues, :new ]
+  sub_menus:
+    tab_purchasing:
+      #    name                 controller   action
+      - [ :search_for_salesdoc, :purchasing, :search_for_salesdoc ]
+      - [ :create_salesdoc, :cart, :shop ]
+      - [ :change_order, :order_change, :change ]
+      - [ :display_quotes, :purchasing, :list_quotes ]
+      # - [ :create_quote, :quote, :shop ]
+      - [ :create_rfq, :rfq, :shop ]
+      - [ :create_return, :return, :shop ]
+    tab_invoices:
+      - [ :search_for_invoice, :invoicing, :search_for_invoice ]
+      - [ :open_items, :open_items, :show ]
+      - [ :pay_invoices, :open_items, :pay_invoices ]
+      - [ :search_for_payment, :payments, :search_for_payment ]
+    tab_admin:
+      - [ :user_maintenance, :admin, :user_maintenance ]
+      - [ :site_settings, flexite/tree ]
+      # - [ :role_maintenance, :admin, :role_maintenance ]     # every admin gets it
+      - [ :proxy_login, :admin, :proxy_login ]
+      - [ :monitoring, :admin, :monitoring ]
+      - [ :content_maintenance, :admin, :content_maintenance ]
+
+  show_admin_info: false
+  upload_file_limit: 4
+
+  suppress_get_summary: # true or false
+    ws_call: false
+    standard_call: false
+
+  turn_on_fullstory: false # by default it is turned on at produciton and qa
+
+  suppress_get_summary: # true or false
+    ws_call: false
+    standard_call: false

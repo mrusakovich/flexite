@@ -33,7 +33,7 @@ module Flexite
         concat(form.simple_fields_for(:entries, entry_form, index: index) do |fields|
           delete_link = link_to 'Delete', destroy_array_entries_path(id: entry.id, selector: "#{fields.object_name}-#{index}-#{entry.id}"),
                                 remote: true, method: :delete, class: 'btn btn-danger'
-          history_link = link_to 'History', entity_history_path(entry_form.id, entry_form.history_type), remote: true, class: 'btn btn-default'
+          history_link = link_to 'History', entity_histories_path(entry_form.id, entry_form.history_type), remote: true, class: 'btn btn-default'
 
           concat(content_tag(:div, id: "#{fields.object_name}-#{index}-#{entry.id}") do
             concat fields.input :id, as: :hidden

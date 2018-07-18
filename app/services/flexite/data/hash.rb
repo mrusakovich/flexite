@@ -6,7 +6,7 @@ class Flexite::Data::Hash < Hashie::Mash
   end
 
   def self.name
-    Hash.name
+    ::Hash.name
   end
 
   class Hashie::Array

@@ -1,0 +1,16 @@
+.diffs
+  - @data.each do |type, diffs|
+    %button.btn.btn-default{ type: :button,
+    data: { toggle: :collapse, target: "##{t("css.#{type}-diff")}" },
+    aria: { expanded: 'false', controls: t("css.#{type}-diff") },
+    class: "#{t("css.#{type}-diff")}-btn" }
+      = t("labels.buttons.#{type}-diff")
+
+    .collapse{ class: t("css.#{type}-diff"), id: t("css.#{type}-diff") }
+      %ol
+        - diffs.each do |diff|
+          - present type, *diff, :diff do |presenter|
+            %li
+              %pre
+                = presenter.to_view
+

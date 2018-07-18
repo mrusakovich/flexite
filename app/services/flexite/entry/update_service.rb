@@ -22,7 +22,7 @@ module Flexite
 
     def failure
       save_errors
-      Result.new(success: false, endpoint: { status: 400 })
+      Result.new(success: false, endpoint: { action: :edit, status: 400 })
     end
 
     def success

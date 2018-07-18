@@ -13,7 +13,17 @@ Flexite::Engine.routes.draw do
     get :reload, on: :collection
   end
 
-  get ':entity_id/:entity_type/history', to: 'histories#index', as: :entity_history, constraints: { entity_type: /.*/ }
-  get ':id/restore', to: 'histories#restore', as: :history_restore
+  resources :histories, only: [] do
+    get ':entity_id/:entity_type/show', to: 'histories#index', as: :entity, constraints: { entity_type: /.*/ }, on: :collection
+    get :restore
+  end
+
+  resource :diff, only: [:show] do
+    post :check
+    post :apply
+    post :save_diff
+    get :push
+  end
+
   root to: 'application#index'
 end

@@ -27,3 +27,7 @@
 button.close {
     outline: none;
 }
+
+.flex {
+    display: flex;
+}

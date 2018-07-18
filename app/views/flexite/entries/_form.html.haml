@@ -10,4 +10,4 @@
   - if @entry_form.persisted?
     = link_to 'Delete', entry_path(f.object, type: @entry_form.type), method: :delete, remote: true, class: 'btn btn-danger'
   - if @entry_form.with_history?
-    = link_to 'History', entity_history_path(@entry_form.id, @entry_form.history_type), remote: true, class: 'btn btn-default'
+    = link_to 'History', entity_histories_path(@entry_form.id, @entry_form.history_type), remote: true, class: 'btn btn-default'

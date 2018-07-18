@@ -7,14 +7,14 @@ module Flexite
         return failure
       end
 
-      @record = Config.create(@form.attributes, without_protection: true)
+      @record = Config.create(@form.attributes)
       success
     end
 
     protected
 
     def failure
-      Result.new(success: false, endpoint: { status: 400 })
+      Result.new(success: false, endpoint: { action: :new, status: 400 })
     end
 
     def success

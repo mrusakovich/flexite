@@ -3,10 +3,6 @@ class Flexite::SymEntry < Flexite::Entry
     self[:value].to_sym
   end
 
-  def view_value
-    ":#{value}"
-  end
-
   private
 
   def check_value

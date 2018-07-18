@@ -1,7 +1,9 @@
 module Flexite
   class Configuration
     attr_accessor :paths, :root_cache_key, :source_roots, :hierarchy
-    attr_accessor :app_link, :app_name, :history_limit
+    attr_accessor :app_link, :app_name, :history_limit, :migration_token
+    attr_accessor :diff_depth_separator, :async_diff_handler, :diff_approach
+    attr_accessor :stagename, :stages, :cache_matcher
     attr_reader :cache
 
     def initialize
@@ -12,6 +14,10 @@ module Flexite
       @source_roots = {}
       @hierarchy = {}
       @history_limit = 10
+      @diff_depth_separator = ' -> '
+      @diff_approach = :sync
+      @stages = []
+      @cache_matcher = -> (pattern) { Regexp.new(pattern) }
     end
 
     def cache_store=(*args)

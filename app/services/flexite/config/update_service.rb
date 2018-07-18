@@ -6,18 +6,17 @@ module Flexite
           return failure
         end
 
-        @record = Config.find(@form.id)
-        @record.config_id = @form.config_id
-        @record.selectable = @form.selectable
-        @record.name = @form.name
-        @record.save
+        @record = Config.joins(:entry)
+          .select("#{Config.table_name}.*, #{Entry.table_name}.id AS entry_id")
+          .where(id: @form.id).first
+        @record.update_attributes(@form.attributes)
         success
       end
 
       protected
 
       def failure
-        Result.new(success: false, endpoint: { status: 400 })
+        Result.new(success: false, endpoint: { action: :edit, status: 400 })
       end
 
       def success

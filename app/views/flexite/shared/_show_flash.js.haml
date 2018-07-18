@@ -1,5 +1,2 @@
 $flexite("#flash").html("#{j render 'flexite/shared/messages'}");
-$flexite("#flash").delay(1800).hide("slow").promise().then(function() {
-$flexite("#flash").html("");
 $flexite("#flash").show();
-});

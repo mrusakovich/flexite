@@ -28,8 +28,12 @@ module Flexite
 
     def update
       result = call_service_for(:update, entry_params)
-      @entry = Entry.find(entry_params[:id])
-      @entry_form = @entry.class.form(@entry.form_attributes)
+
+      if result.succeed?
+        @entry = Entry.find(entry_params[:id])
+        @entry_form = @entry.class.form(@entry.form_attributes)
+      end
+
       service_flash(result)
       service_response(result)
     end
@@ -79,8 +83,8 @@ module Flexite
 
     def call_service_for(type, entry)
       klass = entry[:type].constantize
-      form = klass.form(entry)
-      ServiceFactory.instance.get(klass.service(type), form).call
+      @entry_form = klass.form(entry)
+      ServiceFactory.instance.get(klass.service(type), @entry_form).call
     end
   end
 end

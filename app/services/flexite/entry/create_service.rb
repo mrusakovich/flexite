@@ -19,6 +19,11 @@ module Flexite
 
       private
 
+      def failure
+        save_errors
+        Result.new(success: false, endpoint: { action: :new, status: 400 })
+      end
+
       def success
         Result.new(flash: { type: :success, message: 'Entry was created!' }, data: @record)
       end

@@ -15,11 +15,13 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ['MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir["test/**/*"]
+  s.required_ruby_version = '~> 2.3.0'
 
   s.add_runtime_dependency 'rails', '~> 3.2', '>= 3.2.22'
   s.add_runtime_dependency 'simple_form', '~> 2.1', '>= 2.1.3'
   s.add_runtime_dependency 'hashie', '~> 3.4', '>= 3.4.6'
   s.add_runtime_dependency 'haml-rails', '~> 0.4.0'
+  s.add_runtime_dependency 'hashdiff', '~> 0.3.7'
 
   s.add_development_dependency 'haml-rails', '~> 0.4.0'
   s.add_development_dependency 'sqlite3'
