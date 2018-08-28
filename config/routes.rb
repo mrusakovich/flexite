@@ -25,5 +25,9 @@ Flexite::Engine.routes.draw do
     get :push
   end
 
+  namespace :api, defaults: { format: :json } do
+    get :configs
+  end
+
   root to: 'application#index'
 end
