@@ -1,5 +1,5 @@
 .diffs
-  - @data.each do |type, diffs|
+  - data&.each do |type, diffs|
     %button.btn.btn-default{ type: :button,
     data: { toggle: :collapse, target: "##{t("css.#{type}-diff")}" },
     aria: { expanded: 'false', controls: t("css.#{type}-diff") },

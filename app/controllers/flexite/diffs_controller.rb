@@ -26,19 +26,12 @@ module Flexite
     end
 
     def show
-      result = ServiceFactory.instance.get("#{Flexite.config.diff_approach}_show_diff".to_sym, params[:stage], params[:url]).call
+      @result = ServiceFactory.instance.get(:show_diff, params[:name]).call
+    end
 
-      if result.succeed?
-        @data = result.data
-        @stage = params[:stage]
-        @url = params[:url]
-      end
-
-      if result.flash.present?
-        service_flash(result)
-      end
-
-      service_response(result)
+    def get
+      @result = ServiceFactory.instance.get(:get_diff, params[:stage], params[:url]).call
+      render :show
     end
   end
 end

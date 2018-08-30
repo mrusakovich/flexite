@@ -26,7 +26,7 @@ $flexite(window).on('load', function () {
     });
 
     $flexite("#show-diff").on("click", function () {
-        $flexite.get("<%= diff_path %>" + "?url=" + $flexite("select[id='stage']").val() + "&stage=" + $flexite("select[id='stage']").text());
+        $flexite.get("<%= get_diff_path %>" + "?url=" + $flexite("select[id='stage']").val() + "&stage=" + $flexite("select[id='stage']").text());
     });
 
     $flexite("#new-node-btn").on("click", function () {

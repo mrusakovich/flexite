@@ -22,7 +22,12 @@ Flexite::Engine.routes.draw do
     post :check
     post :apply
     post :save_diff
+    get :get
     get :push
+  end
+
+  namespace :api, defaults: { format: :json } do
+    get :configs
   end
 
   root to: 'application#index'

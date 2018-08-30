@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180629110934) do
+ActiveRecord::Schema.define(:version => 20180829112429) do
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "flexite_configs", :force => true do |t|
     t.string   "name"
@@ -55,5 +71,12 @@ ActiveRecord::Schema.define(:version => 20180629110934) do
   end
 
   add_index "flexite_history_attributes", ["history_id"], :name => "index_flexite_history_attributes_on_history_id"
+
+  create_table "flexite_job_reports", :force => true do |t|
+    t.string   "file_name"
+    t.integer  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

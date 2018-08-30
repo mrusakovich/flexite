@@ -17,6 +17,9 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
   s.required_ruby_version = '~> 2.3.0'
 
+  s.add_dependency 'delayed_job_active_record', '~> 4.0.3'
+  s.add_dependency 'daemons', '~> 1.2.0'
+
   s.add_runtime_dependency 'rails', '~> 3.2', '>= 3.2.22'
   s.add_runtime_dependency 'simple_form', '~> 2.1', '>= 2.1.3'
   s.add_runtime_dependency 'hashie', '~> 3.4', '>= 3.4.6'
