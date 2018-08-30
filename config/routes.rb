@@ -22,6 +22,7 @@ Flexite::Engine.routes.draw do
     post :check
     post :apply
     post :save_diff
+    get :get
     get :push
   end
 

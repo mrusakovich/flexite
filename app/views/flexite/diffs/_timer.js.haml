@@ -1,0 +1,7 @@
+:javascript
+  setTimeout(function() {
+      $flexite.ajax({
+          url: "#{diff_path}",
+          data: { name: "#{@result.data[:file_name]}" }
+      })
+  }, 2000);
