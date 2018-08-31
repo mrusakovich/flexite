@@ -1,10 +1,10 @@
-ShowDiffJob = Struct.new(:other_tree, :file_name ) do
+ShowDiffJob = Struct.new(:current_tree, :other_tree, :file_name ) do
   def before
     Flexite::JobReport.create(file_name: file_name, status: Flexite::JobReport::STATUS[:in_progress])
   end
 
   def perform
-    Flexite::Diff::CheckService.new(other_tree, file_name).call
+    Flexite::Diff::CheckService.new(current_tree, other_tree, file_name).call
   end
 
   def success

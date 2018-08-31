@@ -1,9 +1,11 @@
 - data = @result.data.try(:[], :diffs)
--if data.blank?
+-if data.nil?
   $flexite('#diff-timer').html("#{j render 'timer'}");
+  $flexite('#progress-loader').modal({ backdrop: 'static', keyboard: false });
 -else
   $flexite("#modal-body").html("#{j render 'diff', data: data}");
   // $flexite("#submit-btn").html("#{j link_to 'Push', push_diff_path(stage: @stage, url: @url), remote: true, class: 'btn btn-success' }");
   $flexite("#modal").modal("show");
+  $flexite('#progress-loader').modal('hide');
 
 

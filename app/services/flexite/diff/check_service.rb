@@ -1,9 +1,9 @@
 module Flexite
   class Diff
     class CheckService
-      def initialize(other_tree, file_name)
+      def initialize(current_tree, other_tree, file_name)
         @other_tree = other_tree
-        @current_tree = Config.t_nodes
+        @current_tree = current_tree
         @file_name = file_name
       end
 

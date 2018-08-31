@@ -31,3 +31,8 @@ button.close {
 .flex {
     display: flex;
 }
+
+.progress-loader {
+    position: absolute;
+    top: 50%;
+}
