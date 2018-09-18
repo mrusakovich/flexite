@@ -5,17 +5,18 @@ module Flexite
 
       def initialize(stage, endpoint)
         @stage = stage
-        @token = Flexite.config.migration_token
-        @endpoint = endpoint + api_configs_path(token: @token)
+        @endpoint = endpoint + api_configs_path(token: Flexite.config.migration_token)
+        get_configs
       end
 
       def call
-        get_configs
-        if File.exists?("#{Rails.root}/config/diffs/#{@file_name}")
-          Diff::ShowService.new(@file_name).call
+        if no_difference?
+          ActionService::Result.new(data: { flash: { type: :success, message: 'There is no difference btw envs' } })
+        elsif Dir.exist?("#{Rails.root}/config/diffs/#{@dir_name}")
+          Diff::ShowService.new(@dir_name).call
         else
           calculate_diff
-          ActionService::Result.new(data: { file_name: @file_name })
+          ActionService::Result.new(data: { dir_name: @dir_name })
         end
       end
 
@@ -26,17 +27,21 @@ module Flexite
         response = Net::HTTP.get(uri)
         @other_tree = JSON.parse(response)
         @current_tree = Config.t_nodes
-        @file_name = "#{checksum}_#{@stage}.yml"
+        @dir_name = "#{@stage}/#{checksum}"
       end
 
       def calculate_diff
-        Delayed::Job.enqueue(ShowDiffJob.new(@current_tree, @other_tree, @file_name))
+        Delayed::Job.enqueue(ShowDiffJob.new(@other_tree, @current_tree, @dir_name))
       end
 
       def checksum
         @other_checksum = Digest::MD5.hexdigest(@other_tree.to_json)
         @current_checksum = Digest::MD5.hexdigest(@current_tree.to_json)
         @checksum = Digest::MD5.hexdigest("#{@other_checksum}#{@current_checksum}")
+      end
+
+      def no_difference?
+        @other_checksum == @current_checksum
       end
     end
   end

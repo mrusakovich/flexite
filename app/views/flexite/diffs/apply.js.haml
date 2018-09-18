@@ -1,0 +1,7 @@
+$flexite("#modal").modal("hide");
+= render 'flexite/shared/show_flash'
+var $tree = $flexite("#tree");
+window.tree = new Tree($tree);
+tree.init();
+$flexite('#section-2').html('');
+$flexite('#section-3').html('');

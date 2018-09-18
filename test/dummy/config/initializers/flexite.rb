@@ -5,7 +5,7 @@ Flexite.configure do |c|
   c.app_name = 'Dummy'
   c.migration_token = 'test'
   c.stages = [
-    ['Dummy1', 'http://localhost:8000']
+    ['test-app', 'http://localhost:8080']
   ]
   c.stagename = 'Dummy'
 end

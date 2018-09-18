@@ -1,2 +1,2 @@
-$flexite("#flash").html("#{j render 'flexite/shared/messages'}");
-$flexite("#flash").show();
+$flexite('#flash').html("#{j render 'flexite/shared/messages', flash: flash.presence || @result.data[:flash]}");
+$flexite('#flash').show();

@@ -8,11 +8,7 @@ module Flexite
     end
 
     def apply
-      render json: ServiceFactory.instance.get(:apply_diff, params[:token], params[:stage], params[:checksum]).call
-    end
-
-    def push
-      result = ServiceFactory.instance.get(:push_diff, params[:stage], params[:url]).call
+      result = ServiceFactory.instance.get(:apply_diff, params[:dir_name]).call
 
       if result.flash.present?
         service_flash(result)
@@ -26,7 +22,7 @@ module Flexite
     end
 
     def show
-      @result = ServiceFactory.instance.get(:show_diff, params[:name]).call
+      @result = ServiceFactory.instance.get(:show_diff, params[:dir_name]).call
     end
 
     def get

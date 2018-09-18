@@ -1,19 +1,20 @@
-#tree-buttons.row
-  .col-md-6.pos-fixed
-    .flex
-      %button#new-node-btn.btn.btn-success New node
-      %button#edit-node-btn.btn.btn-success Edit node
-      %button#delete-node-btn.btn.btn-danger Delete
-      = link_to 'Reload cache', reload_configs_path, remote: true, class: 'btn btn-info'
-      %button#show-diff.btn.btn-warning Show diff
-      = stage_select
-      = back_to_app
-.row#tree-container
-  .col-md-4
-    #tree
-  .col-md-4
-    #section-2.pos-fixed
-  .col-md-4
-    #section-3.pos-fixed
+.container
+  #tree-buttons.row
+    .col-md-6.pos-fixed
+      .flex
+        %button#new-node-btn.btn.btn-success New node
+        %button#edit-node-btn.btn.btn-success Edit node
+        %button#delete-node-btn.btn.btn-danger Delete
+        = link_to 'Reload cache', reload_configs_path, remote: true, class: 'btn btn-info'
+        %button#show-diff.btn.btn-warning Show diff
+        = stage_select
+        = back_to_app
+  .row#tree-container
+    .col-md-4
+      #tree
+    .col-md-4
+      #section-2.pos-fixed
+    .col-md-4
+      #section-3.pos-fixed
 #diff-timer
 

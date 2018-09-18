@@ -1,8 +1,14 @@
 module Flexite
   module ApplicationHelper
-    def present(*args, presenter)
-      klass = "Flexite::#{presenter.to_s.camelize}Presenter".constantize
-      yield(klass.new(self, *args))
+    def present(object, klass = nil)
+      begin
+        klass = "#{object.class}Presenter".constantize
+        presenter = klass.new(object, self)
+      rescue => exc
+        raise "#{object.class} is not presentable. #{exc.message}"
+      end
+      yield(presenter) if block_given?
+      presenter
     end
 
     def back_to_app

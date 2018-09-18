@@ -26,7 +26,8 @@ $flexite(window).on('load', function () {
     });
 
     $flexite("#show-diff").on("click", function () {
-        $flexite.get("<%= get_diff_path %>" + "?url=" + $flexite("select[id='stage']").val() + "&stage=" + $flexite("select[id='stage']").text());
+        $flexite('#progress-loader').modal({ backdrop: 'static', keyboard: false });
+        $flexite.get("diff/get?url=" + $flexite("select[id='stage']").val() + "&stage=" + $flexite("select[id='stage']").text());
     });
 
     $flexite("#new-node-btn").on("click", function () {
@@ -37,7 +38,7 @@ $flexite(window).on('load', function () {
                 $flexite.get(node.newHref);
             })
         } else {
-            $flexite.get("<%= new_config_path %>");
+            $flexite.get('configs/new');
         }
     });
 });
@@ -46,7 +47,7 @@ function Tree(selector) {
     var self = this, tree = $flexite(selector);
 
     this.init = function () {
-        $flexite.get("<%= configs_path(format: :json) %>", function (data) {
+        $flexite.get('/configs', function (data) {
             tree.treeview({
                 data: data,
                 onNodeExpanded: function (event, node) {

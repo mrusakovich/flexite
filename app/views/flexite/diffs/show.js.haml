@@ -1,11 +1,11 @@
-- data = @result.data.try(:[], :diffs)
--if data.nil?
-  $flexite('#diff-timer').html("#{j render 'timer'}");
-  $flexite('#progress-loader').modal({ backdrop: 'static', keyboard: false });
--else
-  $flexite("#modal-body").html("#{j render 'diff', data: data}");
-  // $flexite("#submit-btn").html("#{j link_to 'Push', push_diff_path(stage: @stage, url: @url), remote: true, class: 'btn btn-success' }");
+
+-if @result.flash.present?
+  $flexite('#progress-loader').modal('hide');
+  = render 'flexite/shared/show_flash'
+-elsif @result.respond_to?(:diffs)
+  $flexite("#modal-body").html("#{j render 'diff', diffs: @result.diffs}");
+  $flexite("#submit-btn").html("#{j link_to 'Apply', apply_diff_path(dir_name: @result.dir_name), remote: true, method: :post, class: 'btn btn-success' }");
   $flexite("#modal").modal("show");
   $flexite('#progress-loader').modal('hide');
-
-
+-else
+  $flexite('#diff-timer').html("#{j render 'timer', dir_name: @result.data[:dir_name]}");

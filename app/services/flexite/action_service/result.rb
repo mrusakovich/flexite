@@ -43,4 +43,13 @@ class Flexite::ActionService::Result
   def flash
     @options.fetch(:flash, {})
   end
+
+  def method_missing(method, *args, &block)
+    return super if data.keys.exclude?(method)
+    data[method]
+  end
+
+  def respond_to_missing?(method, *args)
+    data.key?(method) || super
+  end
 end
