@@ -47,7 +47,7 @@ function Tree(selector) {
     var self = this, tree = $flexite(selector);
 
     this.init = function () {
-        $flexite.get('/configs', function (data) {
+        $flexite.get('/api/configs', function (data) {
             tree.treeview({
                 data: data,
                 onNodeExpanded: function (event, node) {
