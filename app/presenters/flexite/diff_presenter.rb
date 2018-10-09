@@ -8,7 +8,9 @@ module Flexite
     def path
       tree = Config.roots
       path = @object.path.each_with_object([]) do |value, result|
-        result << tree[value]['name'] if value.is_a?(Integer)
+        if value.is_a?(Integer) && tree[value].present?
+          result << tree[value]['name']
+        end
         tree = tree.dig(value)
       end.join(' -> ')
       content_tag(:div, class: 'raw') { path }
