@@ -8,7 +8,7 @@ module Flexite
     def path
       tree = Config.roots
       path = @object.path.each_with_object([]) do |value, result|
-        break if tree.nil?
+        next if tree.nil?
 
         if value.is_a?(Integer) && tree[value].present?
           result << tree[value]['name']

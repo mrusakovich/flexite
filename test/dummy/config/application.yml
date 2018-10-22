@@ -602,3 +602,6 @@ defaults: &default
   suppress_get_summary: # true or false
     ws_call: false
     standard_call: false
+
+development:
+  <<: *defaults

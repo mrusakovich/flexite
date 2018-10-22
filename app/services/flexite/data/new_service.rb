@@ -25,7 +25,6 @@ module Flexite
 
       def save_root(root, configs)
         @result[root] = {}
-
         Config.create!(name: root) do |record|
           begin
             save_hash_value(record, configs)

@@ -7,7 +7,7 @@ module Flexite
 
       def call
         @data = { dir_name: @dir_name}
-        if Dir.exists?("#{Rails.root}/config/diffs/#{@dir_name}")
+        if Dir.exist?("#{Rails.root}/config/diffs/#{@dir_name}")
           @data[:diffs] = diffs
         end
 
